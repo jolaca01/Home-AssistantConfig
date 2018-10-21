@@ -2,7 +2,7 @@
 *
 !*.yaml
 !.gitignore
-!readme.md
+!README.md
 !HA?.jpg
 google_calendars.yaml
 secrets.yaml
