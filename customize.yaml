@@ -1,0 +1,300 @@
+group.all_automations:
+  hidden: false
+######################################################################
+sensor.living_room_thermostat_temperature:
+  friendly_name: Temperatura interior salón
+climate.living_room:
+  friendly_name: Nest salon
+binary_sensor.living_room_thermostat_fan:
+  friendly_name: Nest salon ventilador
+  hidden: true
+binary_sensor.living_room_thermostat_online:
+  friendly_name: Nest salon online
+binary_sensor.living_room_thermostat_has_leaf:
+  friendly_name: Nest salon modo ECO
+sensor.living_room_thermostat_target:
+  friendly_name: Nest salon temp deseada
+sensor.living_room_thermostat_operation_mode:
+  friendly_name: Nest salon modo
+binary_sensor.living_room_thermostat_is_using_emergency_heat:
+  friendly_name: Nest salon usando antifreeze
+binary_sensor.living_room_thermostat_is_locked:
+  friendly_name: Nest salon bloqueado
+sensor.living_room_thermostat_humidity:
+  friendly_name: Humedad interior salón
+sensor.pws_relative_humidity:
+  friendly_name: Humedad relativa Ext
+sensor.pws_solarradiation:
+  friendly_name: Radiacion solar
+sensor.pws_pressure_trend:
+  friendly_name: Presion tendencia
+sensor.pws_pressure_mb:
+  friendly_name: Presion
+sensor.pws_temp_high_record_c:
+  hidden: true
+sensor.pws_temp_low_record_c:
+  hidden: true
+sensor.living_room_thermostat_hvac_state:
+  friendly_name: Nest salon estado caldera
+sensor.pws_temp_high_1d_c:
+  friendly_name: Max Temp Hoy
+sensor.pws_temp_low_1d_c:
+  friendly_name: Min Temp Hoy
+media_player.plex_web_chrome:
+  friendly_name: 'Plex Web '
+sensor.pws_precip_1d_mm:
+  friendly_name: Lluvia intensidad hoy
+sensor.pws_precip_1d:
+  friendly_name: Lluvia probabilidad hoy
+sensor.pws_precip_today_metric:
+  friendly_name: Lluvia hoy (mm)
+sensor.pws_precip_today_string:
+  hidden: true
+sensor.pws_temp_c:
+  friendly_name: Temperatura exterior
+sensor.pws_temperature_string:
+  friendly_name: Temperatura Ext Resumen
+sensor.neo_coolcam_battery_powered_pir_sensor_temperature:
+  friendly_name: Temperatura interior cocina
+sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2:
+  friendly_name: Temperatura interior cine
+sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3:
+  friendly_name: Temperatura exterior entrada
+#########################################################################  
+timer.puerta_garaje:
+  icon: mdi:clock-fast
+binary_sensor.neo_coolcam_water_leakage_detector_sensor:
+  friendly_name: Fuga de agua en la cocina
+  icon: mdi:water-pump
+binary_sensor.neo_coolcam_water_leakage_detector_sensor_2:
+  friendly_name: Fuga de agua en baño principal
+  icon: mdi:water-pump
+binary_sensor.neo_coolcam_water_leakage_detector_sensor_3:
+  friendly_name: Fuga de agua en baño azul
+  icon: mdi:water-pump 
+binary_sensor.neo_coolcam_water_leakage_detector_sensor_4:
+  friendly_name: Fuga de agua en aseo
+  icon: mdi:water-pump   
+binary_sensor.skybell_front_door_button:
+  friendly_name: Timbre cancela
+  icon: mdi:bell-ring
+binary_sensor.skybell_front_door_motion:
+  friendly_name: Alguien en cancela
+  device_class: motion
+binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor:
+  friendly_name: Alguien en garaje
+  device_class: motion
+binary_sensor.sensor_2:
+  friendly_name: Alguien en pasillo planta 1
+  device_class: motion
+binary_sensor.sensor_3:
+  friendly_name: Alguien en comedor
+  device_class: motion
+binary_sensor.sensor_4:
+  friendly_name: Alguien en recibidor
+  device_class: motion
+binary_sensor.sensor_5:
+  friendly_name: Alguien en salon
+  device_class: motion
+binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2:
+  friendly_name: Alguien en cocina
+  device_class: motion
+binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3:
+  friendly_name: Alguien en cine
+  device_class: motion
+binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_4:
+  friendly_name: Alguien en entrada exterior
+  device_class: motion
+binary_sensor.sensor_6:
+  friendly_name: Puerta garaje abierta
+  icon: mdi:garage-alert
+sensor.luminance:
+  friendly_name: Nivel iluminacion recibidor
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_2: #nodo 42
+  friendly_name: Nivel iluminacion pasillo planta 1
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_3: #nivel iluminacion comedor node 24
+  friendly_name: Nivel iluminacion comedor
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4: #nivel iluminación salon node 37
+  friendly_name: Nivel iluminacion salon
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_5: #nivel iluminación garaje
+  friendly_name: Nivel iluminacion garaje
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6: #nivel iluminación recibidor
+  friendly_name: Nivel iluminacion cocina
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_7: #nivel iluminación cine
+  friendly_name: Nivel iluminacion cine
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_8: #nivel iluminación exterior entrada
+  friendly_name: Nivel iluminacion entrada
+sensor.neo_coolcam_battery_cocina:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_comedor:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_salon:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_entrada:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_recibidor:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_pasillo:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_cine:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_garaje:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_puerta_garaje:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_water_detector_cocina:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_water_detector_bany_principal:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_water_detector_bany_azul:
+  icon: mdi:battery
+sensor.neo_coolcam_battery_water_detector_aseo:
+  icon: mdi:battery      
+##########################################################################
+cover.habitacion_1:
+  friendly_name: Persianas habitación principal
+cover.habitacion_patri:
+  friendly_name: Persianas habitación Patri
+cover.salon:
+  friendly_name: Persianas salon
+cover.cocina:
+  friendly_name: Persianas cocina
+cover.level_2:
+  friendly_name: Sara
+cover.level_3:
+  friendly_name: Habitacion 2
+cover.level_4:
+  friendly_name: Habitacion 1
+cover.qubino_zmnhcdx_flush_shutter_level: #sustituye al estropeado y cambiado: cover.level_5
+  friendly_name: Salon 1
+cover.level_6:
+  friendly_name: Salon 4
+cover.qubino_zmnhcdx_flush_shutter_level_3:   #cover.level_7:antiguo Patri2
+  friendly_name: Patri 2
+cover.level_8:
+  friendly_name: Patri 1
+cover.level_9:
+  friendly_name: Salon 3
+cover.level_10:
+  friendly_name: Salon 2  
+cover.level_11:
+  friendly_name: Toldo exterior
+  icon: mdi:blinds
+cover.level_12:
+  friendly_name: Cocina 1
+cover.qubino_zmnhcdx_flush_shutter_level_2: 
+  friendly_name: Cocina 2  
+cover.level:
+  friendly_name: Cocina 3
+cover.level_13:
+  friendly_name: Cocina 4
+cover.level_14:
+  friendly_name: Aseo
+###########################################################################
+media_player.kitchen:
+  friendly_name: Sonos cocina
+media_player.cine:
+  friendly_name: Sonos cine
+media_player.living_room:
+  friendly_name: Sonos salon
+media_player.dormitorio:
+  friendly_name: Sonos Patri
+media_player.dormitorio_2:
+  friendly_name: Sonos Sara
+media_player.bedroom:
+  friendly_name: Sonos habitacion  
+media_player.living_room_tv:
+  friendly_name: Chromecast salón
+media_player.shield:
+  friendly_name: Chromecast Shield cine
+media_player.kitchen_tv:
+  friendly_name: Chromecast cocina
+media_player.shield_android_tv:
+  friendly_name: Nvidia Shield TV
+###########################################################################
+device_tracker.jlphone_jlphone:
+  friendly_name: Jorge
+device_tracker.ttxjalpp_plphone:
+  friendly_name: Patricia
+device_tracker.bgphone_bgphone:
+  friendly_name: Blanca
+device_tracker.ttxjalpp_slphone:
+  friendly_name: Sara
+########################################################################
+light.level:
+  friendly_name: Luz regulable comedor
+  icon: mdi:ceiling-light
+light.level_2:
+  friendly_name: Mesita salon
+  icon: mdi:lamp
+########################################################################
+switch.qubino_zmnhbdx_flush_2_relays_switch_13: #era antes switch.qubino_zmnhbdx_flush_2_relays_switch_7
+  friendly_name: Luz techo chimenea
+  icon: mdi:lightbulb-on-outline
+switch.qubino_zmnhbdx_flush_2_relays_switch_14: #era antes switch.qubino_zmnhbdx_flush_2_relays_switch_8
+  friendly_name: Luz techo salida y comoda
+  icon: mdi:lightbulb-on-outline
+switch.switch_11:
+  friendly_name: light_and_fan
+  hidden: true
+switch.qubino_zmnhbdx_flush_2_relays_switch:
+  friendly_name: Luz indirecta
+  icon: mdi:lightbulb-on-outline
+switch.qubino_zmnhbdx_flush_2_relays_switch_2:
+  friendly_name: Campana extractora
+  icon: mdi:fan
+switch.switch_12:
+  friendly_name: Luz techo cocina y mesa cocina
+  hidden: true
+switch.qubino_zmnhbdx_flush_2_relays_switch_3:
+  friendly_name: Luz mesa #cocina
+  icon: mdi:ceiling-light
+switch.qubino_zmnhbdx_flush_2_relays_switch_4:
+  friendly_name: Luz techo #cocina
+  icon: mdi:lightbulb-on-outline
+switch.switch_13:
+  friendly_name: Cancela
+  icon: mdi:door-open
+switch.switch_16:
+  friendly_name: Puerta de garaje
+  icon: mdi:car-connected
+switch.switch_2:
+  friendly_name: Luces frontales y anulada
+  hidden: true
+switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch:
+  friendly_name: Luces frontales
+  icon: mdi:lightbulb-on-outline
+switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch_2:
+  friendly_name: Luces anulada
+  hidden: true
+switch.switch_24:
+  friendly_name: Interrruptores mesita y lampara
+  hidden: true  
+switch.switch_22:
+  friendly_name: Lampara lectura alta
+  icon: mdi:floor-lamp
+switch.qubino_zmnhbdx_flush_2_relays_switch_11:
+  friendly_name: Interruptor mesita salon
+  icon: mdi:lamp
+switch.qubino_zmnhbdx_flush_2_relays_switch_12:
+  friendly_name: Interruptor lampara lectura
+  icon: mdi:floor-lamp
+switch.qubino_zmnhbdx_flush_2_relays_switch_9:
+  friendly_name: Luz garaje 
+  icon: mdi:lightbulb-on-outline
+######################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

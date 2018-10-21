@@ -1,0 +1,523 @@
+
+main_users:
+  name: Ubicación
+  view: no
+  entities:
+    - input_boolean.alarma_activada
+    - device_tracker.bgphone_bgphone
+    - device_tracker.jlphone_jlphone
+    - device_tracker.ttxjalpp_plphone
+    - device_tracker.ttxjalpp_slphone
+
+main_users2:
+  name: Ubicación
+  view: no
+  entities:
+    - device_tracker.bgphone_bgphone
+    - device_tracker.jlphone_jlphone
+    - device_tracker.jorge_mate10_ping
+    - device_tracker.blanca_mi_A1_ping
+    - device_tracker.patricia_axon7mini_ping
+
+main_nest_data:
+  name: Nest Termostato
+  view: no
+  entities:
+    - binary_sensor.living_room_thermostat_online
+    - binary_sensor.living_room_thermostat_has_leaf
+    - binary_sensor.living_room_thermostat_is_locked
+    - binary_sensor.living_room_thermostat_is_using_emergency_heat
+    - sensor.living_room_thermostat_operation_mode
+    - sensor.living_room_thermostat_hvac_state
+    - sensor.pws_temp_c
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3 #temp exterior entrada
+    - sensor.living_room_thermostat_temperature #temperatura salón nest
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature #temp int cocina
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2 #temp interior cine
+    
+    
+    - sensor.living_room_thermostat_target  
+    - sensor.living_room_thermostat_humidity
+    - sensor.pws_relative_humidity
+    - climate.living_room
+
+main_google_wifi:
+  name: Google wifi router
+  view: no
+  entities:
+    - sensor.google_wifi_current_version
+    - sensor.google_wifi_new_version
+    - sensor.google_wifi_uptime
+    - sensor.google_wifi_last_restart
+    - sensor.google_wifi_status
+
+main_fail2ban:
+  name: fail2ban IDS
+  view: no
+  entities:
+    - sensor.fail2ban_hassiptables
+    - sensor.fail2ban_ssh
+
+main_detection:
+  name: Detecciones
+  view: no
+  entities:
+    - binary_sensor.skybell_front_door_motion #alguien en cancela
+    - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor  #alguien en garaje   
+    - binary_sensor.sensor_2  #alguien en pasillo planta 1
+    - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en recibidor
+    - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3 #ãlguien en entrada exterior
+    - binary_sensor.sensor_4  #alguien en cocina
+    - binary_sensor.sensor_3  #alguien en comedor
+    - binary_sensor.sensor_5  #alguien en salón
+    - binary_sensor.sensor_6  #puerta garaje abierta
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature #temp int recibidor
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2 #temp interior cine
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3 #temp exterior entrada
+    - binary_sensor.neo_coolcam_water_leakage_detector_sensor #agua en cocina
+    - binary_sensor.neo_coolcam_water_leakage_detector_sensor_2 #agua en baño principal
+    - binary_sensor.neo_coolcam_water_leakage_detector_sensor_3 #agua en baño azul
+    - binary_sensor.neo_coolcam_water_leakage_detector_sensor_4 #agua en aseo
+
+
+##########################################Grupos PERSIANAS ######################################
+
+main_persianas_habitacion:
+  name: Habitación principal
+  view: no
+  entities:
+    - cover.habitacion_1
+    - cover.level_4
+    - cover.level_3
+    
+
+main_persianas_habitacion_patri:
+  name: Habitación Patri
+  view: no
+  entities:
+    - cover.habitacion_patri
+    - cover.level_8 #Patri persiana 1
+    - cover.qubino_zmnhcdx_flush_shutter_level_3 #Patri persiana 2 antes cover.level_7 #
+    
+main_persianas_habitacion_sara:
+  name: Habitación Sara
+  view: no
+  entities:
+    - cover.level_2
+   
+main_persianas_habitaciones:
+  name: Todas las habitaciones
+  view: no
+  entities:
+    - cover.habitacion_1
+    - cover.habitacion_patri
+    - cover.level_2 #habitacionSara
+
+main_persianas_salon:
+  name: Salon persianas
+  view: no
+  entities:
+    - cover.qubino_zmnhcdx_flush_shutter_level #salon 1 antes cover.level_5 #persiana salon 1, ahora estropeada
+    - cover.level_10 #persiana salón 2 
+    - cover.level_9 # persiana salón 3
+    - cover.level_6  # persiana salón 4
+    
+main_persianas_cocina:
+  name: Cocina
+  view: no
+  entities: 
+    - cover.level_12 #persiana 1 cocina 
+    - cover.qubino_zmnhcdx_flush_shutter_level_2 #persiana 2 cocina
+    - cover.level #persiana 3 cocina
+    - cover.level_13 #persiana 4 cocina
+    - cover.level_14 #persiana aseo
+
+main_persianas_cocina_salon:
+  name: Persianas_abrir
+  view: no
+  entities:
+    - cover.salon
+    - cover.cocina
+
+
+###################################Grupos Dispositivos por Habitaciones ################################
+#Habitaciones de momento solo son los grupos de persianas
+main_salon:
+  name: Salon
+  view: no
+  control: hidden
+  entities:
+    - cover.salon
+    - cover.qubino_zmnhcdx_flush_shutter_level # persiana salon 1-antes cover.level_5 
+    - cover.level_10 #persiana salón 2 
+    - cover.level_9 # persiana salón 3
+    - cover.level_6  # persiana salón 4
+    - light.level #luz regulable comedor
+    - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_3 #nivel iluminacion comedor
+    - binary_sensor.sensor_3
+    - light.level_2  #luz mesita salon
+    - switch.switch_22 #enchufe lámpara lectura
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_14 #- switch.qubino_zmnhbdx_flush_2_relays_switch_8     # luz techo salida y cómoda
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_13 #- switch.qubino_zmnhbdx_flush_2_relays_switch_7    # luz techo chimenea
+    - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4 #nivel iluminación salon
+    - binary_sensor.sensor_5 #sensor alguien en salon
+    - sensor.living_room_thermostat_temperature #temperatura en salón
+    - sensor.luminance #iluminación recibidor
+    - binary_sensor.sensor_4  #alguien en recibidor
+    
+       
+main_cinema:
+  name: Cinema
+  view: no    
+  control: hidden
+  entities: 
+    - light.CinemaLights
+    - light.CinemaLEDs
+    - input_number.cinema_slider
+    - light.CinemaLED2
+    - input_number.cinema_slider2
+    - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_7
+    - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2
+   
+main_switches:
+  name: Exterior
+  control: hidden
+  entities:    
+    - switch.switch_16 #puerta garaje
+    - binary_sensor.sensor_6 #Detector puerta garaje
+    - timer.puerta_garaje    
+    - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_5 #nivel iluminacion garaje
+    - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor #alguien en garaje
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_9
+    - switch.switch_13 #abre puerta cancela
+    - binary_sensor.skybell_front_door_button
+    - binary_sensor.skybell_front_door_motion
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3 #temperatura exterior entrada
+    - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_4 #alguien en entrada
+    - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_8 #nivel iluminacion entrada
+    - switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch #luces frontales
+    - cover.level_11 #toldo
+        
+
+main_cocina:
+  name: Cocina
+  view: no
+  control: hidden
+  entities:  
+    - cover.cocina
+    - cover.level_12 #persiana 1 cocina 
+    - cover.qubino_zmnhcdx_flush_shutter_level_2 #persiana 2 cocina
+    - cover.level #persiana 3 cocina
+    - cover.level_13 #persiana 4 cocina
+    - cover.level_14 #persiana aseo
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_3 #luz mesa 
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_4 #luz techo
+    - switch.qubino_zmnhbdx_flush_2_relays_switch   #luz indirecta
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_2 #campana extractora
+    - sensor.neo_coolcam_battery_powered_pir_sensor_temperature #temperatura interior cocina
+    - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
+    - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6 #nivel iluminación cocina
+    - binary_sensor.neo_coolcam_water_leakage_detector_sensor 
+    - binary_sensor.neo_coolcam_water_leakage_detector_sensor_4
+#################################### Grupos solapas en FRONT END ###########################################
+default_view:
+  name: Domo
+  icon: mdi:home-automation 
+  view: yes
+  entities:
+    - group.main_switches #exterior
+    - group.main_salon
+    - group.main_cocina
+    - group.main_cinema
+    - group.main_persianas_habitacion
+    - group.main_persianas_habitacion_patri
+    - group.main_persianas_habitacion_sara     
+############################################  
+main_switches_view:
+  view: yes
+  icon: mdi:home 
+  entities:
+    - group.main_users
+    - group.main_detection
+    - group.main_switches
+    - group.main_nest_data
+    - group.main_weather
+    - group.main_synology
+    - group.main_google_wifi
+    - group.main_fail2ban
+#############################################
+      
+main_nest_view:
+  name: Nest salón
+  icon: mdi:temperature-celsius
+  view: yes
+  entities:
+    - group.main_nest_data
+############################################  
+main_cameras:
+  name: Cámaras
+  control: hidden
+  entities:    
+    - camera.salon
+    - camera.kitchen
+    - camera.entrada
+    - camera.front_door   
+    - camera.exterior_trasera 
+
+main_cameras_view:
+  name: Cámaras
+  icon: mdi:video
+  view: yes
+  entities:
+    - group.main_cameras
+############################################
+main_users_view:
+  name: Ubicación
+  icon: mdi:account-multiple
+  view: yes
+  entities:
+    - group.main_users
+############################################
+main_weather:
+  name: Tiempo en Gandia
+  entities: 
+    - sun.sun
+    - sensor.pws_weather_1d_metric
+    - sensor.pws_weather_1n_metric
+    - sensor.pws_temp_c
+    - sensor.pws_temp_high_1d_c
+    - sensor.pws_temp_low_1d_c
+    - sensor.pws_feelslike_c
+    - sensor.pws_precip_today_metric
+    - sensor.pws_precip_1d
+    - sensor.pws_wind_kph
+    - sensor.pws_wind_1d_kph
+    - sensor.pws_pressure_mb
+    - sensor.pws_pressure_trend
+    - sensor.pws_relative_humidity
+    - sensor.pws_solarradiation
+    - sensor.pws_alerts
+main_weather_4days_forecast:
+  name: Previsión a 4 días
+  view: no
+  entities:
+    - sensor.pws_weather_2d_metric
+    - sensor.pws_weather_2n_metric
+    - sensor.pws_weather_3d_metric
+    - sensor.pws_weather_3n_metric
+    - sensor.pws_weather_4d_metric
+    - sensor.pws_weather_4n_metric
+main_weather_view:
+  name: Tiempo actual
+  icon: mdi:weather-partlycloudy
+  view: yes
+  entities:
+    - group.main_weather
+    - group.main_weather_4days_forecast
+########################################
+main_media_audio_players:
+  name: Audio_media
+  icon: mdi:music
+  control: hidden
+  entities:
+    - media_player.kitchen
+    - media_player.living_room
+    - media_player.bedroom  
+    - media_player.dormitorio
+    - media_player.dormitorio_2
+    - media_player.cine
+main_media_av_players:
+  name: Audio Video
+  icon: mdi:theater
+  control: hidden
+  entities:
+    - media_player.plex_web_chrome
+    - media_player.kitchen_tv
+    - media_player.living_room_tv
+    - media_player.shield
+    - media_player.shield_android_tv
+    - remote.harmony_hub
+main_media_av_view:
+  name: Audio Video
+  icon: mdi:theater
+  view: yes
+  control: hidden
+  entities:
+    - group.main_media_audio_players
+    - group.main_media_av_players
+########################################
+main_automations_and_scripts_view:
+  name: Scripts and Automations
+  icon: mdi:file-document 
+  view: yes
+  entities:
+    - group.all_automations
+    - group.all_scripts
+#########################################
+main_info_dispositivos:
+  name: Info Dispositivos
+  icon: mdi:speedometer
+  view: yes
+  control: hidden
+  entities:
+    - group.main_sensores_con_baterias
+    - group.main_dimmer2_comedor
+    - group.main_persiana_salon_SE
+    - group.main_persiana_salon_salida_SE
+    - group.main_persiana_salon_SW
+    - group.main_persiana_salon_NE
+    - group.main_persiana_cocina_grande
+    - group.main_persiana_habitacion
+    - group.main_persiana_habitacion_balcon
+    - group.main_persiana_patri_balcon_SW
+    - group.main_persiana_patri
+    - group.main_persiana_habitacion_sara
+    
+################################################### Grupos otros parámetros dispositivos o disp ZWAVE ##################################
+main_synology:
+  name: Synology DS216+
+  view: no
+  entities:
+    - sensor.cpu_load_total
+    - sensor.memory_available_real
+    - sensor.memory_usage_real
+    - sensor.network_down
+    - sensor.network_up
+    - sensor.status_volume_1
+    - sensor.temperature_sda
+    - sensor.temperature_sdb
+main_sensores_con_baterias:
+  name: Estado de las baterias
+  view: no
+  entities:
+    - sensor.neo_coolcam_battery_cocina
+    - sensor.neo_coolcam_battery_water_detector_cocina
+    - sensor.neo_coolcam_battery_comedor
+    - sensor.neo_coolcam_battery_salon
+    - sensor.neo_coolcam_battery_entrada
+    - sensor.neo_coolcam_battery_recibidor
+    - sensor.neo_coolcam_battery_pasillo
+    - sensor.neo_coolcam_battery_cine
+    - sensor.neo_coolcam_battery_garaje
+    - sensor.neo_coolcam_battery_puerta_garaje
+    - sensor.neo_coolcam_battery_water_detector_bany_principal
+    - sensor.neo_coolcam_battery_water_detector_bany_azul
+    - sensor.neo_coolcam_battery_water_detector_aseo
+main_persiana_cocina_grande:
+  name: Persiana cocina NW
+  view: no
+  control: hidden
+  entities:
+    - sensor.fibaro_system_fgrm222_roller_shutter_controller_2_energy
+    - sensor.fibaro_system_fgrm222_roller_shutter_controller_2_exporting
+    - sensor.fibaro_system_fgrm222_roller_shutter_controller_2_power
+    - sensor.fibaro_system_fgrm222_roller_shutter_controller_2_power_2
+main_persiana_habitacion_sara:
+  name: persiana Sara NW
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy
+    - sensor.qubino_zmnhcdx_flush_shutter_power
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading
+    - switch.qubino_zmnhcdx_flush_shutter_switch
+main_persiana_habitacion_balcon:
+  name: persiana habitacion balcon SE
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_3
+    - sensor.qubino_zmnhcdx_flush_shutter_power_3
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_3
+    - switch.qubino_zmnhcdx_flush_shutter_switch_3
+main_persiana_habitacion:
+  name: persiana habitacion SW
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_2
+    - sensor.qubino_zmnhcdx_flush_shutter_power_2
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_2
+    - switch.qubino_zmnhcdx_flush_shutter_switch_2
+main_persiana_salon_NE:
+  name: persiana salon NE
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_4
+    - sensor.qubino_zmnhcdx_flush_shutter_power_4
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_4
+    - switch.qubino_zmnhcdx_flush_shutter_switch_4
+
+main_persiana_salon_SW:
+  name: persiana salon SW
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_5
+    - sensor.qubino_zmnhcdx_flush_shutter_power_5
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_5
+    - switch.qubino_zmnhcdx_flush_shutter_switch_5
+
+main_persiana_salon_SE:
+  name: persiana salon SE
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_27
+    - sensor.qubino_zmnhcdx_flush_shutter_power_27
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_27
+    - switch.qubino_zmnhcdx_flush_shutter_switch_27
+
+main_persiana_patri_balcon_SW:
+  name: persiana Patri balcon SW
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_6
+    - sensor.qubino_zmnhcdx_flush_shutter_power_6
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_6
+    - switch.qubino_zmnhcdx_flush_shutter_switch_6
+
+main_persiana_patri:
+  name: persiana Patri SW
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_7
+    - sensor.qubino_zmnhcdx_flush_shutter_power_7
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_7
+    - switch.qubino_zmnhcdx_flush_shutter_switch_7
+
+main_persiana_salon_salida_SE:
+  name: persiana salon salida SE
+  view: no
+  control: hidden
+  entities:
+    - sensor.qubino_zmnhcdx_flush_shutter_energy_8
+    - sensor.qubino_zmnhcdx_flush_shutter_power_8
+    - sensor.qubino_zmnhcdx_flush_shutter_previous_reading_8
+    - switch.qubino_zmnhcdx_flush_shutter_switch_8
+
+
+main_dimmer2_comedor:
+  name: Dimmer 2 comedor
+  view: no
+  control: hidden 
+  entities:
+    - sensor.fibaro_system_fgd212_dimmer_2_alarm_level
+    - sensor.fibaro_system_fgd212_dimmer_2_alarm_type
+    - sensor.fibaro_system_fgd212_dimmer_2_energy
+    - sensor.fibaro_system_fgd212_dimmer_2_exporting
+    - sensor.fibaro_system_fgd212_dimmer_2_heat
+    - sensor.fibaro_system_fgd212_dimmer_2_power
+    - sensor.fibaro_system_fgd212_dimmer_2_power_2
+    - sensor.fibaro_system_fgd212_dimmer_2_power_management
+    - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid
+    - sensor.fibaro_system_fgd212_dimmer_2_system
+
+
+#######################################################################################################
+
+   

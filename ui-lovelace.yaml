@@ -1,0 +1,424 @@
+resources:
+  - url: /local/group-card/group-card.js?v=1
+    type: js
+
+
+############################################################################################
+title: Casa Gandia
+views: 
+  - title: Domo
+    icon: mdi:home-automation
+    cards:        
+      - type: entities
+        show_header_toggle: false
+        title: Exterior
+        entities:
+          - switch.switch_16 #puerta garaje
+          - binary_sensor.sensor_6 #Detector puerta garaje
+          - timer.puerta_garaje    
+          - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_5 #nivel iluminacion garaje
+          - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor #alguien en garaje
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_9 #luz del garaje
+          - type: divider
+          - switch.switch_13 #abre puerta cancela
+          - binary_sensor.skybell_front_door_button #boton cancela
+          - binary_sensor.skybell_front_door_motion #detector cancela
+          - type: divider
+          - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3 #temperatura exterior entrada
+          - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_8 #nivel iluminacion entrada
+          - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_4 #alguien en entrada          
+          - switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch #luces frontales
+          - type: divider
+          - cover.level_11 #toldo
+      - type: entities
+        show_header_toggle: false
+        title: Salón
+        entities:    
+          - cover.salon
+          - cover.qubino_zmnhcdx_flush_shutter_level  #antes cover.level_5 #persiana salon 1
+          - cover.level_10 #persiana salón 2 
+          - cover.level_9 # persiana salón 3
+          - cover.level_6  # persiana salón 4
+          - type: divider
+          - light.level #luz regulable comedor
+          - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_3 #nivel iluminacion comedor
+          - binary_sensor.sensor_3
+          - type: divider
+          - light.level_2  #luz mesita salon
+          - switch.switch_22 #enchufe lámpara lectura
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_14 #- switch.qubino_zmnhbdx_flush_2_relays_switch_8     # luz techo salida y cómoda
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_13 #- switch.qubino_zmnhbdx_flush_2_relays_switch_7    # luz techo chimenea
+          - type: divider
+          - sensor.living_room_thermostat_temperature #temperatura en salón
+          - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4 #nivel iluminación salon
+          - binary_sensor.sensor_5 #sensor alguien en salon          
+          - type: divider
+          - sensor.luminance #iluminación recibidor
+          - binary_sensor.sensor_4  #alguien en recibidor   
+      - type: entities
+        show_header_toggle: false
+        title: Cocina
+        entities: 
+          - cover.cocina
+          - cover.level_12 #persiana 1 cocina 
+          - cover.qubino_zmnhcdx_flush_shutter_level_2 #persiana 2 cocina
+          - cover.level    #persiana 3 cocina
+          - cover.level_13 #persiana 4 cocina
+          - cover.level_14 #persiana aseo
+          - type: divider
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_3 #luz mesa 
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_4 #luz techo
+          - switch.qubino_zmnhbdx_flush_2_relays_switch   #luz indirecta
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_2 #campana extractora
+          - type: divider
+          - sensor.neo_coolcam_battery_powered_pir_sensor_temperature #temperatura interior cocina
+          - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6 #nivel iluminación cocina
+          - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
+          - type: divider
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor 
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_4
+
+      - type: entities
+        show_header_toggle: false
+        title: Cine
+        entities: 
+          - light.cinemalights
+          - light.cinemaleds
+          - input_number.cinema_slider
+          - light.cinemaled2
+          - input_number.cinema_slider2
+          - type: divider
+          - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2
+          - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_7
+          - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3
+          
+      - type: entities
+        show_header_toggle: false
+        title: Habitación Principal
+        entities: 
+          - cover.habitacion_1
+          - cover.level_4
+          #- cover.level_3  
+          - type: divider
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_2
+      - type: entities
+        show_header_toggle: false
+        title: Habitación Patri
+        entities:
+          - cover.habitacion_patri
+          - cover.level_8 #Patri persiana 1
+          - cover.qubino_zmnhcdx_flush_shutter_level_3 #Patri persiana 2 antes cover.level_7  
+          - type: divider
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_3 
+      - type: entities
+        show_header_toggle: false
+        title: Habitación Sara
+        entities:  
+          - cover.level_2  
+
+ ############################################################################## 
+  - title: Nest
+    icon: mdi:temperature-celsius
+    cards: 
+      - type: entities       
+        show_header_toggle: false 
+        title: En casa
+        entities:
+          - sensor.living_room_thermostat_humidity
+          - sensor.living_room_thermostat_temperature
+          - sensor.neo_coolcam_battery_powered_pir_sensor_temperature
+          - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2
+          - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3
+          - sensor.pws_temp_c
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:   
+              - type: gauge
+                title: Temp casa
+                unit_of_measurement: 'ºC'
+                entity: sensor.living_room_thermostat_temperature
+                max: 40
+                severity:
+                  green: 0
+                  yellow: 21
+                  #orange: 23
+                  red: 24
+              - type: gauge
+                title: Humedad casa
+                unit_of_measurement: '%'
+                entity: sensor.living_room_thermostat_humidity
+                max: 100
+                severity:
+                  yellow: 0
+                  green: 35
+                  red: 70
+                  #red: 80
+          - type: entities        
+            show_header_toggle: false
+            title: Nest
+            entities:
+              - binary_sensor.living_room_thermostat_online
+              - binary_sensor.living_room_thermostat_has_leaf
+              - binary_sensor.living_room_thermostat_is_locked
+              - binary_sensor.living_room_thermostat_is_using_emergency_heat
+              - sensor.living_room_thermostat_operation_mode
+              - sensor.living_room_thermostat_hvac_state
+              - sensor.pws_temp_c
+              - sensor.living_room_thermostat_temperature #temperatura salón nest
+              - sensor.living_room_thermostat_target  
+              - sensor.living_room_thermostat_humidity
+              - sensor.pws_relative_humidity
+              - climate.living_room         
+
+      - type: history-graph
+        hours_to_show: 24        
+        title: Temperatura
+        entities:
+          - sensor.living_room_thermostat_temperature
+          - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3
+          - sensor.pws_temp_c
+          - sensor.living_room_thermostat_target
+      - type: history-graph
+        hours_to_show: 24        
+        title: Humedad
+        entities:
+          - sensor.living_room_thermostat_humidity
+          - sensor.pws_relative_humidity
+      - type: history-graph
+        hours_to_show: 144        
+        title: Evolución Temp 6 dias
+        entities:
+          - sensor.living_room_thermostat_temperature
+          - sensor.pws_temp_c          
+      - type: history-graph
+        hours_to_show: 24        
+        title: Caldera
+        entities:
+          - sensor.living_room_thermostat_hvac_state
+
+###################################################################################################
+
+  - title: Detección
+    icon: mdi:walk
+    cards:
+      - type: entities
+        show_header_toggle: false
+        title: Ubicación
+        entities:
+          - input_boolean.alarma_activada
+          - device_tracker.bgphone_bgphone
+          - device_tracker.jlphone_jlphone
+          - device_tracker.ttxjalpp_plphone
+          - device_tracker.ttxjalpp_slphone
+      - type: entity-filter
+        card:
+          type: glance
+          show_state: false
+          title: "Están en casa:"
+        entities:
+          - device_tracker.bgphone_bgphone
+          - device_tracker.jlphone_jlphone
+          - device_tracker.ttxjalpp_plphone
+          - device_tracker.ttxjalpp_slphone
+        state_filter:
+          - home
+        
+      - type: map
+        entities:
+          - device_tracker.bgphone_bgphone
+          - device_tracker.jlphone_jlphone
+          - device_tracker.ttxjalpp_plphone
+          - device_tracker.ttxjalpp_slphone
+      - type: entities
+        show_header_toggle: false
+        title: Presencia
+        entities:
+          - binary_sensor.skybell_front_door_motion #alguien en cancela
+          - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor  #alguien en garaje   
+          - binary_sensor.sensor_2  #alguien en pasillo planta 1
+          - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en recibidor
+          - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3 #ãlguien en entrada exterior
+          - binary_sensor.sensor_4  #alguien en cocina
+          - binary_sensor.sensor_3  #alguien en comedor
+          - binary_sensor.sensor_5  #alguien en salón
+          - binary_sensor.sensor_6  #puerta garaje abierta
+      - type: entities
+        show_header_toggle: false
+        title: Fugas
+        entities:
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor #agua en cocina
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_2 #agua en baño principal
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_3 #agua en baño azul
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_4 #agua en aseo  
+######################################################################################################
+  - title: Weather
+    icon: mdi:weather-partlycloudy
+    cards:        
+      - type: entities        
+        show_header_toggle: false
+        title: Tiempo en Gandia
+        entities:
+          - sun.sun
+          - sensor.pws_weather_1d_metric
+          - sensor.pws_weather_1n_metric
+          - sensor.pws_temp_c
+          - sensor.pws_temp_high_1d_c
+          - sensor.pws_temp_low_1d_c
+          - sensor.pws_feelslike_c
+          - sensor.pws_precip_today_metric
+          - sensor.pws_precip_1d
+          - sensor.pws_wind_kph
+          - sensor.pws_wind_1d_kph
+          - sensor.pws_pressure_mb
+          - sensor.pws_pressure_trend
+          - sensor.pws_relative_humidity
+          - sensor.pws_solarradiation
+          - sensor.pws_alerts
+
+      - type: entities       
+        show_header_toggle: false
+        title: Tiempo en 3 días
+        entities:
+          - sensor.pws_weather_2d_metric
+          - sensor.pws_weather_2n_metric
+          - sensor.pws_weather_3d_metric
+          - sensor.pws_weather_3n_metric
+          - sensor.pws_weather_4d_metric
+          - sensor.pws_weather_4n_metric
+      - type: iframe
+        url: https://embed.windy.com/embed2.html
+        aspect_ratio: 100%   
+      - type: iframe
+        url: http://jolaca01.duckdns.org:8124
+        aspect_ratio: 100%     
+  ##################################################################################################    
+  - title: Cámaras
+    icon: mdi:video
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:   
+              - type: picture-entity        
+                entity: camera.salon
+              - type: picture-entity        
+                entity: camera.kitchen           
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity        
+                entity: camera.entrada
+              - type: picture-entity        
+                entity: camera.exterior_trasera 
+      - type: vertical-stack
+        cards:
+          - type: picture-entity        
+            entity: camera.front_door           
+  ######################################################################################################
+  - title: Audio Video
+    icon: mdi:theater
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:   
+              - type: media-control
+                entity: media_player.kitchen
+              - type: media-control
+                entity: media_player.living_room           
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: media-control
+                entity: media_player.cine
+              - type: media-control      
+                entity: media_player.bedroom 
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: media-control
+                entity: media_player.dormitorio
+              - type: media-control
+                entity: media_player.dormitorio_2
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: media-control
+                entity: media_player.living_room_tv
+              #- type: media-control
+              #  entity: media_player.plex_web_chrome
+              - type: media-control
+                entity: media_player.kitchentv
+      - type: vertical-stack
+        cards:  
+          - type: horizontal-stack
+            cards:        
+              - type: media-control
+                entity: media_player.shield
+              #- type: media-control
+              #  entity: media_player.chrome este es el Plex del Chrome en el ordenador o en el cine??
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - remote.harmony_hub
+###################################################################################################################################
+  - title: Internet Detection
+    icon: mdi:access-point-network
+    cards:      
+      - type: custom:group-card
+        card:
+          type: entities
+          title: Google WiFi
+        group: group.main_google_wifi
+      - type: vertical-stack
+        cards:
+          - type: custom:group-card
+            card:
+              type: entities
+              title: Synology DS216+
+            group: group.main_synology              
+          - type: gauge
+            title: CPU Usage
+            unit_of_measurement: '%'
+            entity: sensor.cpu_load_total
+            severity:
+              green: 0
+              yellow: 45
+              red: 85
+          - type: gauge
+            title: Memory available
+            unit_of_measurement: 'Mb'
+            entity: sensor.memory_available_real
+            max: 1000
+            severity:
+              red: 0
+              yellow: 150
+              green: 500
+          
+          
+      
+      - type: entities
+        show_header_toggle: false
+        title: IDS
+        entities:
+          - sensor.fail2ban_hassiptables
+          - sensor.fail2ban_ssh
+      
+######################################################################################################################################
+  - title: Automations
+    icon: mdi:file-document
+    cards:
+      - type: custom:group-card
+        card:
+          type: entities
+          title: Automations
+        group: group.all_automations
+    
+
+  - title: Info Dispositivos
+    icon: mdi:speedometer
