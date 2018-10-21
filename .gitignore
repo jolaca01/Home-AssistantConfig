@@ -2,6 +2,8 @@
 *
 !*.yaml
 !.gitignore
+!readme.md
+!HA?.jpg
 google_calendars.yaml
 secrets.yaml
 known_devices.yaml
