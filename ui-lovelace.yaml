@@ -5,17 +5,19 @@ resources:
 
 ############################################################################################
 title: Casa Gandia
-views: 
-  - title: Domo
+views:
+  - id: 0  # Automatically created id
+    title: Domo
     icon: mdi:home-automation
-    cards:        
-      - type: entities
+    cards:
+      - id: 04c1b64d7d9843c0a39059af3f756962  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Exterior
         entities:
           - switch.switch_16 #puerta garaje
           - binary_sensor.sensor_6 #Detector puerta garaje
-          - timer.puerta_garaje    
+          - timer.puerta_garaje
           - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_5 #nivel iluminacion garaje
           - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor #alguien en garaje
           - switch.qubino_zmnhbdx_flush_2_relays_switch_9 #luz del garaje
@@ -30,10 +32,11 @@ views:
           - switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch #luces frontales
           - type: divider
           - cover.level_11 #toldo
-      - type: entities
+      - id: bce80d18046b4fd2989252029553baf9  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Salón
-        entities:    
+        entities:
           - cover.salon
           - cover.qubino_zmnhcdx_flush_shutter_level  #antes cover.level_5 #persiana salon 1
           - cover.level_10 #persiana salón 2 
@@ -55,10 +58,11 @@ views:
           - type: divider
           - sensor.luminance #iluminación recibidor
           - binary_sensor.sensor_4  #alguien en recibidor   
-      - type: entities
+      - id: 30032798af9c4dd3936d57aaec92557d  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Cocina
-        entities: 
+        entities:
           - cover.cocina
           - cover.level_12 #persiana 1 cocina 
           - cover.qubino_zmnhcdx_flush_shutter_level_2 #persiana 2 cocina
@@ -68,20 +72,21 @@ views:
           - type: divider
           - switch.qubino_zmnhbdx_flush_2_relays_switch_3 #luz mesa 
           - switch.qubino_zmnhbdx_flush_2_relays_switch_4 #luz techo
-          - switch.qubino_zmnhbdx_flush_2_relays_switch   #luz indirecta
-          - switch.qubino_zmnhbdx_flush_2_relays_switch_2 #campana extractora
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_16 #antes switch.qubino_zmnhbdx_flush_2_relays_switch   #luz indirecta
+          - switch.qubino_zmnhbdx_flush_2_relays_switch_17 #antes switch.qubino_zmnhbdx_flush_2_relays_switch_2 #campana extractora
           - type: divider
           - sensor.neo_coolcam_battery_powered_pir_sensor_temperature #temperatura interior cocina
           - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6 #nivel iluminación cocina
           - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
           - type: divider
-          - binary_sensor.neo_coolcam_water_leakage_detector_sensor 
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor
           - binary_sensor.neo_coolcam_water_leakage_detector_sensor_4
 
-      - type: entities
+      - id: 89d2319f505c40308768815c766667b8  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Cine
-        entities: 
+        entities:
           - light.cinemalights
           - light.cinemaleds
           - input_number.cinema_slider
@@ -91,17 +96,19 @@ views:
           - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2
           - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_7
           - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3
-          
-      - type: entities
+
+      - id: 51019cacc01a48f88de97ff696b73363  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Habitación Principal
-        entities: 
+        entities:
           - cover.habitacion_1
           - cover.level_4
-          #- cover.level_3  
+          - cover.qubino_zmnhcdx_flush_shutter_level_4 #- cover.level_3  
           - type: divider
           - binary_sensor.neo_coolcam_water_leakage_detector_sensor_2
-      - type: entities
+      - id: 1d3f4d0aa6f34d26bf55edeced2dfc89  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Habitación Patri
         entities:
@@ -109,19 +116,22 @@ views:
           - cover.level_8 #Patri persiana 1
           - cover.qubino_zmnhcdx_flush_shutter_level_3 #Patri persiana 2 antes cover.level_7  
           - type: divider
-          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_3 
-      - type: entities
+          - binary_sensor.neo_coolcam_water_leakage_detector_sensor_3
+      - id: d3e43098a62d444db7e4f4b954cd3eca  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Habitación Sara
-        entities:  
-          - cover.level_2  
+        entities:
+          - cover.level_2
 
  ############################################################################## 
-  - title: Nest
+  - id: 1  # Automatically created id
+    title: Nest
     icon: mdi:temperature-celsius
-    cards: 
-      - type: entities       
-        show_header_toggle: false 
+    cards:
+      - id: 502141d55b744528872d64f72609617d  # Automatically created id
+        type: entities
+        show_header_toggle: false
         title: En casa
         entities:
           - sensor.living_room_thermostat_humidity
@@ -130,13 +140,14 @@ views:
           - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2
           - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3
           - sensor.pws_temp_c
-      - type: vertical-stack
+      - id: a41e648323104836b4dc6325563de59b  # Automatically created id
+        type: vertical-stack
         cards:
           - type: horizontal-stack
-            cards:   
+            cards:
               - type: gauge
                 title: Temp casa
-                unit_of_measurement: 'ºC'
+                unit_of_measurement: ºC
                 entity: sensor.living_room_thermostat_temperature
                 max: 40
                 severity:
@@ -154,7 +165,10 @@ views:
                   green: 35
                   red: 70
                   #red: 80
-          - type: entities        
+          - type: thermostat
+            title: Nest casa
+            entity: climate.living_room
+          - type: entities
             show_header_toggle: false
             title: Nest
             entities:
@@ -166,43 +180,49 @@ views:
               - sensor.living_room_thermostat_hvac_state
               - sensor.pws_temp_c
               - sensor.living_room_thermostat_temperature #temperatura salón nest
-              - sensor.living_room_thermostat_target  
+              - sensor.living_room_thermostat_target
               - sensor.living_room_thermostat_humidity
               - sensor.pws_relative_humidity
-              - climate.living_room         
+              - climate.living_room
 
-      - type: history-graph
-        hours_to_show: 24        
+      - id: 0d1c031e53744cb1b6c44d15977228d2  # Automatically created id
+        type: history-graph
+        hours_to_show: 24
         title: Temperatura
         entities:
           - sensor.living_room_thermostat_temperature
           - sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3
           - sensor.pws_temp_c
           - sensor.living_room_thermostat_target
-      - type: history-graph
-        hours_to_show: 24        
+      - id: 53d05221b7364e2cb00f46f88cd065df  # Automatically created id
+        type: history-graph
+        hours_to_show: 24
         title: Humedad
         entities:
           - sensor.living_room_thermostat_humidity
           - sensor.pws_relative_humidity
-      - type: history-graph
-        hours_to_show: 144        
+      - id: d8c51705e78748eca61b33a23e598dce  # Automatically created id
+        type: history-graph
+        hours_to_show: 144
         title: Evolución Temp 6 dias
         entities:
           - sensor.living_room_thermostat_temperature
-          - sensor.pws_temp_c          
-      - type: history-graph
-        hours_to_show: 24        
+          - sensor.pws_temp_c
+      - id: 7f4658970751428a9a345315f76c8d56  # Automatically created id
+        type: history-graph
+        hours_to_show: 24
         title: Caldera
         entities:
           - sensor.living_room_thermostat_hvac_state
 
 ###################################################################################################
 
-  - title: Detección
+  - id: 2  # Automatically created id
+    title: Detección
     icon: mdi:walk
     cards:
-      - type: entities
+      - id: 7dfb35b9f2c54ad698b6e871d48af934  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Ubicación
         entities:
@@ -211,11 +231,12 @@ views:
           - device_tracker.jlphone_jlphone
           - device_tracker.ttxjalpp_plphone
           - device_tracker.ttxjalpp_slphone
-      - type: entity-filter
+      - id: 9f29103e4f3444c6aaaa74e8f5b33a5a  # Automatically created id
+        type: entity-filter
         card:
           type: glance
           show_state: false
-          title: "Están en casa:"
+          title: 'Están en casa:'
         entities:
           - device_tracker.bgphone_bgphone
           - device_tracker.jlphone_jlphone
@@ -223,14 +244,16 @@ views:
           - device_tracker.ttxjalpp_slphone
         state_filter:
           - home
-        
-      - type: map
+
+      - id: 53a2ee2cc11946ebac548f47539a4c6a  # Automatically created id
+        type: map
         entities:
           - device_tracker.bgphone_bgphone
           - device_tracker.jlphone_jlphone
           - device_tracker.ttxjalpp_plphone
           - device_tracker.ttxjalpp_slphone
-      - type: entities
+      - id: 95abf4fb0aec45ca83f6db7814e44d29  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Presencia
         entities:
@@ -243,7 +266,8 @@ views:
           - binary_sensor.sensor_3  #alguien en comedor
           - binary_sensor.sensor_5  #alguien en salón
           - binary_sensor.sensor_6  #puerta garaje abierta
-      - type: entities
+      - id: 8b5291dddb1e4093b55bd7ef2dc88f84  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Fugas
         entities:
@@ -252,10 +276,12 @@ views:
           - binary_sensor.neo_coolcam_water_leakage_detector_sensor_3 #agua en baño azul
           - binary_sensor.neo_coolcam_water_leakage_detector_sensor_4 #agua en aseo  
 ######################################################################################################
-  - title: Weather
+  - id: 3  # Automatically created id
+    title: Weather
     icon: mdi:weather-partlycloudy
-    cards:        
-      - type: entities        
+    cards:
+      - id: 0d9edb8392d540fd896f49e6e932e940  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Tiempo en Gandia
         entities:
@@ -276,7 +302,8 @@ views:
           - sensor.pws_solarradiation
           - sensor.pws_alerts
 
-      - type: entities       
+      - id: 810111527ffe43839bde81a869e1cac3  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: Tiempo en 3 días
         entities:
@@ -286,57 +313,60 @@ views:
           - sensor.pws_weather_3n_metric
           - sensor.pws_weather_4d_metric
           - sensor.pws_weather_4n_metric
-      - type: iframe
+      - id: 4792c1f2395d446d8f7efd0621389eca  # Automatically created id
+        type: iframe
         url: https://embed.windy.com/embed2.html
-        aspect_ratio: 100%   
-      - type: iframe
+        aspect_ratio: 100%
+      - id: 42320b8207b54787becb229e72ddd937  # Automatically created id
+        type: iframe
         url: http://jolaca01.duckdns.org:8124
-        aspect_ratio: 100%     
+        aspect_ratio: 100%
   ##################################################################################################    
-  - title: Cámaras
+  - id: 4  # Automatically created id
+    title: Cámaras
     icon: mdi:video
     cards:
-      - type: vertical-stack
-        cards:
-          - type: horizontal-stack
-            cards:   
-              - type: picture-entity        
-                entity: camera.salon
-              - type: picture-entity        
-                entity: camera.kitchen           
-      - type: vertical-stack
+      - id: 90c682c7a49f4e9e80d2fe1e626557b8  # Automatically created id
+        type: vertical-stack
         cards:
           - type: horizontal-stack
             cards:
-              - type: picture-entity        
-                entity: camera.entrada
-              - type: picture-entity        
-                entity: camera.exterior_trasera 
-      - type: vertical-stack
-        cards:
-          - type: picture-entity        
-            entity: camera.front_door           
-  ######################################################################################################
-  - title: Audio Video
-    icon: mdi:theater
-    cards:
-      - type: vertical-stack
+              - type: picture-entity
+                entity: camera.salon
+              - type: picture-entity
+                entity: camera.kitchen
+      - id: 5af24fd30333446d8530999fbbde939b  # Automatically created id
+        type: vertical-stack
         cards:
           - type: horizontal-stack
-            cards:   
+            cards:
+              - type: picture-entity
+                entity: camera.entrada
+              - type: picture-entity
+                entity: camera.exterior_trasera
+      - id: 06c14e480b7448f590fb09349904fa77  # Automatically created id
+        type: vertical-stack
+        cards:
+          - type: picture-entity
+            entity: camera.front_door
+  ######################################################################################################
+  - id: 5  # Automatically created id
+    title: Audio Video
+    icon: mdi:theater
+    cards:
+      - id: 592d0e7c3b254e24b61300643b35fea9  # Automatically created id
+        type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
               - type: media-control
                 entity: media_player.kitchen
               - type: media-control
-                entity: media_player.living_room           
-      - type: vertical-stack
-        cards:
-          - type: horizontal-stack
-            cards:
-              - type: media-control
-                entity: media_player.cine
-              - type: media-control      
-                entity: media_player.bedroom 
-      - type: vertical-stack
+                entity: media_player.living
+      
+                          
+      - id: 5dee2ace9c894dfda1a28c21c34508fc  # Automatically created id
+        type: vertical-stack
         cards:
           - type: horizontal-stack
             cards:
@@ -344,7 +374,8 @@ views:
                 entity: media_player.dormitorio
               - type: media-control
                 entity: media_player.dormitorio_2
-      - type: vertical-stack
+      - id: e9002bcec19d49169675272afaa15308  # Automatically created id
+        type: vertical-stack
         cards:
           - type: horizontal-stack
             cards:
@@ -354,10 +385,13 @@ views:
               #  entity: media_player.plex_web_chrome
               - type: media-control
                 entity: media_player.kitchentv
-      - type: vertical-stack
-        cards:  
+      - id: e932db623f8941f49b24ff06be085936  # Automatically created id
+        type: vertical-stack
+        cards:
           - type: horizontal-stack
-            cards:        
+            cards:
+              - type: media-control
+                entity: media_player.cine  
               - type: media-control
                 entity: media_player.shield
               #- type: media-control
@@ -367,21 +401,24 @@ views:
             entities:
               - remote.harmony_hub
 ###################################################################################################################################
-  - title: Internet Detection
+  - id: 6  # Automatically created id
+    title: Internet Detection
     icon: mdi:access-point-network
-    cards:      
-      - type: custom:group-card
+    cards:
+      - id: f24ca44758a74c65992486d7f6ba3ff6  # Automatically created id
+        type: custom:group-card
         card:
           type: entities
           title: Google WiFi
         group: group.main_google_wifi
-      - type: vertical-stack
+      - id: 9aa98021f12c4b7da267156bc6d2c451  # Automatically created id
+        type: vertical-stack
         cards:
           - type: custom:group-card
             card:
               type: entities
               title: Synology DS216+
-            group: group.main_synology              
+            group: group.main_synology
           - type: gauge
             title: CPU Usage
             unit_of_measurement: '%'
@@ -392,33 +429,37 @@ views:
               red: 85
           - type: gauge
             title: Memory available
-            unit_of_measurement: 'Mb'
+            unit_of_measurement: Mb
             entity: sensor.memory_available_real
             max: 1000
             severity:
               red: 0
               yellow: 150
               green: 500
-          
-          
-      
-      - type: entities
+
+
+
+      - id: 23a211ecf4f44824b18d8566e46ce6a5  # Automatically created id
+        type: entities
         show_header_toggle: false
         title: IDS
         entities:
           - sensor.fail2ban_hassiptables
           - sensor.fail2ban_ssh
-      
+
 ######################################################################################################################################
-  - title: Automations
+  - id: 7  # Automatically created id
+    title: Automations
     icon: mdi:file-document
     cards:
-      - type: custom:group-card
+      - id: 8ab6eaf0adff40ce971c87632d0ebc1f  # Automatically created id
+        type: custom:group-card
         card:
           type: entities
           title: Automations
         group: group.all_automations
-    
 
-  - title: Info Dispositivos
+
+  - id: 8  # Automatically created id
+    title: Info Dispositivos
     icon: mdi:speedometer

@@ -112,8 +112,18 @@
     service: cover.close_cover
     entity_id: cover.qubino_zmnhcdx_flush_shutter_level_2  
 ###########################################################################################################
-
-
+- id: 'Extractor cocina se apaga'
+  alias: 'Extractor cocina se apaga'
+  trigger:
+  - platform: state
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_17
+    to: 'on'
+    for:
+      minutes: 10
+  action:
+    service: switch.turn_off
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_17
+###########################################################################################################
 - id: 'Luz indirecta cocina se apaga'
   alias: 'Luz indirecta cocina se apaga'
   trigger:
@@ -124,7 +134,7 @@
       minutes: 5
   action:
     service: switch.turn_off
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_16
 ###########################################################################################################
 - id: 'Luz indirecta cocina se enciende'
   alias: 'Luz indirecta cocina se enciende'
@@ -139,11 +149,11 @@
         entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6
         below: '25'
       - condition: state
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch
+        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_16
         state: 'off'
   action:
     service: switch.turn_on
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_16
 ###########################################################################################################
 - id: 'Luces cocina mesa y/o techo se apagan'
   alias: 'Luces cocina mesa y/o techo se apagan'
@@ -283,16 +293,18 @@
     entity_id: remote.harmony_hub
     to: 'on'
     for:
-      seconds: 30
+      seconds: 5
     
   action:
     - service: light.turn_on
       data:
         entity_id: light.cinemalights
-        brightness: 5
+        brightness: 1
         rgb_color: [0,0,255]
     - service: automation.turn_off
       entity_id: automation.leds_cine_se_apagan
+    - service: automation.turn_off
+      entity_id: automation.leds_cine_se_encienden
 ###########################################################################################################      
 - id: 'Leds cine vuelven de modo cine'
   alias: 'Leds cine vuelven de modo cine'
@@ -300,7 +312,9 @@
   - platform: state
     entity_id: remote.harmony_hub
     to: 'off'
-    
+  - platform: state
+    entity_id: remote.harmony_hub
+    to: 'pause'  
     
   action:
     - service: light.turn_on
@@ -310,6 +324,8 @@
         rgb_color: [255,255,255]
     - service: automation.turn_on
       entity_id: automation.leds_cine_se_apagan
+    - service: automation.turn_on
+      entity_id: automation.leds_cine_se_encienden
 ###########################################################################################################
 
 - id: 'Luz garaje se enciende'
@@ -539,7 +555,7 @@
       master: 'kitchen'
       volume: 0.40
       what: "Hola, parece que la puerta del garaje lleva abierta más de 3 minutos.
-            Por favor, comrpuébelo y cierre la puerta si es posible, gracias."
+            Por favor, compruébelo y cierre la puerta si es posible, gracias."
     service: script.sonos_tts_todos
   alias: Aviso puerta garaje abierta
   id: 'Aviso puerta garaje abierta más de 3 minutos'

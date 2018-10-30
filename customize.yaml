@@ -61,6 +61,7 @@ sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2:
 sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3:
   friendly_name: Temperatura exterior entrada
 #########################################################################  
+
 timer.puerta_garaje:
   icon: mdi:clock-fast
 binary_sensor.neo_coolcam_water_leakage_detector_sensor:
@@ -161,7 +162,7 @@ cover.cocina:
   friendly_name: Persianas cocina
 cover.level_2:
   friendly_name: Sara
-cover.level_3:
+cover.qubino_zmnhcdx_flush_shutter_level_4: # antiguo cover.level_3:
   friendly_name: Habitacion 2
 cover.level_4:
   friendly_name: Habitacion 1
@@ -195,22 +196,20 @@ media_player.kitchen:
   friendly_name: Sonos cocina
 media_player.cine:
   friendly_name: Sonos cine
-media_player.living_room:
-  friendly_name: Sonos salon
+media_player.living:
+  friendly_name: Sonos salón
 media_player.dormitorio:
   friendly_name: Sonos Patri
 media_player.dormitorio_2:
   friendly_name: Sonos Sara
-media_player.bedroom:
-  friendly_name: Sonos habitacion  
 media_player.living_room_tv:
-  friendly_name: Chromecast salón
+  friendly_name: Chromecast TV salón
 media_player.shield:
   friendly_name: Chromecast Shield cine
 media_player.kitchen_tv:
-  friendly_name: Chromecast cocina
+  friendly_name: Chromecast TV cocina
 media_player.shield_android_tv:
-  friendly_name: Nvidia Shield TV
+  friendly_name: Nvidia Shield
 ###########################################################################
 device_tracker.jlphone_jlphone:
   friendly_name: Jorge
@@ -234,13 +233,13 @@ switch.qubino_zmnhbdx_flush_2_relays_switch_13: #era antes switch.qubino_zmnhbdx
 switch.qubino_zmnhbdx_flush_2_relays_switch_14: #era antes switch.qubino_zmnhbdx_flush_2_relays_switch_8
   friendly_name: Luz techo salida y comoda
   icon: mdi:lightbulb-on-outline
-switch.switch_11:
+switch.qubino_zmnhbdx_flush_2_relays_switch_18: #anterior switch.switch_11:
   friendly_name: light_and_fan
   hidden: true
-switch.qubino_zmnhbdx_flush_2_relays_switch:
+switch.qubino_zmnhbdx_flush_2_relays_switch_16: #anterior switch.qubino_zmnhbdx_flush_2_relays_switch
   friendly_name: Luz indirecta
   icon: mdi:lightbulb-on-outline
-switch.qubino_zmnhbdx_flush_2_relays_switch_2:
+switch.qubino_zmnhbdx_flush_2_relays_switch_17: #anterior switch.qubino_zmnhbdx_flush_2_relays_switch_2:
   friendly_name: Campana extractora
   icon: mdi:fan
 switch.switch_12:

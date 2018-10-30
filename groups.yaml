@@ -88,7 +88,7 @@ main_persianas_habitacion:
   entities:
     - cover.habitacion_1
     - cover.level_4
-    - cover.level_3
+    - cover.qubino_zmnhcdx_flush_shutter_level_4 #habitacion2 antes cover.level_3
     
 
 main_persianas_habitacion_patri:
@@ -213,8 +213,8 @@ main_cocina:
     - cover.level_14 #persiana aseo
     - switch.qubino_zmnhbdx_flush_2_relays_switch_3 #luz mesa 
     - switch.qubino_zmnhbdx_flush_2_relays_switch_4 #luz techo
-    - switch.qubino_zmnhbdx_flush_2_relays_switch   #luz indirecta
-    - switch.qubino_zmnhbdx_flush_2_relays_switch_2 #campana extractora
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_16   #luz indirecta
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_17 #campana extractora
     - sensor.neo_coolcam_battery_powered_pir_sensor_temperature #temperatura interior cocina
     - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
     - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6 #nivel iluminación cocina

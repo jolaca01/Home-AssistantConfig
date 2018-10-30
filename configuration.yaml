@@ -76,6 +76,10 @@ cloud:
         - switch.switch_21
         - switch.switch_23
         - switch.switch_24
+        - switch.qubino_zmnhcdx_flush_shutter_switch
+        - switch.qubino_zmnhcdx_flush_shutter_switch_2
+        - switch.qubino_zmnhcdx_flush_shutter_switch_3
+        - switch.qubino_zmnhcdx_flush_shutter_switch_4
         - cover.switch_2
         - cover.switch_3
         - cover.switch_4
@@ -92,10 +96,12 @@ cloud:
         - cover.qubino_zmnhcdx_flush_shutter_switch
         - cover.qubino_zmnhcdx_flush_shutter_switch_2
         - cover.qubino_zmnhcdx_flush_shutter_switch_3
+        - cover.qubino_zmnhcdx_flush_shutter_switch_4
         - switch.qubino_zmnhbdx_flush_2_relays_switch_7
         - switch.qubino_zmnhbdx_flush_2_relays_switch_8
         - switch.qubino_zmnhbdx_flush_2_relays_switch_10
         - switch.qubino_zmnhbdx_flush_2_relays_switch_15
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_18
         - light.fibaro_system_fgd212_dimmer_2_level
         - input_boolean.ya_informado
 # Allows you to issue voice commands from the frontend in enabled browsers
@@ -112,7 +118,7 @@ cover:
     name: habitacion_1
     entities:
       - cover.level_4 #persiana 1
-      #- cover.level_3 #persiana 2 habitación princpal, ahora estropeada
+      - cover.qubino_zmnhcdx_flush_shutter_level_4 #- cover.level_3 #persiana 2 habitación princpal
   - platform: group
     name: habitacion_patri
     entities:
@@ -359,17 +365,11 @@ sensor:
       - 'date_time'
       - 'time_date'
   - platform: google_travel_time
-    name: home to school
+    name: home_to_work
     api_key: !secret google_travel_time_api_key 
     origin: zone.home
-    destination: zone.colegio
-    options:
-      units: metric
-  - platform: google_travel_time
-    name: school to work
-    api_key: !secret google_travel_time_api_key 
-    origin: zone.colegio
     destination: zone.oficina
+    scan_interval: 3600 #intervalo de polling en segundos. 
     options:
       units: metric
   - platform: wunderground
@@ -548,7 +548,7 @@ sensor:
             '0'
           {% endif %}
 shell_command:
-  set_ids_permissions: sudo chmod 0744 /var/log/fail2ban.log
+  set_ids_permissions: chmod 0744 /var/log/fail2ban.log
 
 skybell: # Enables SkyBell HD
   username: !secret skybell_username 
