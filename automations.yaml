@@ -5,11 +5,8 @@
   - event: sunrise
     offset: -00:10
     platform: sun
-  #- platform: time
-  #  at: '07:00:00'
   condition:
     condition: time
-  # At least one of the following is required.
     weekday:
     - mon
     - tue
@@ -18,19 +15,23 @@
     - fri
   action:
   - data:
-      entity_id: group.main_persianas_cocina_salon,  cover.qubino_zmnhcdx_flush_shutter_switch_2
-      position: 85
+      entity_id: cover.planta_baja, cover.qubino_zmnhcdx_flush_shutter_level_2
+      position: 90
     service: cover.set_cover_position
   - data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
         han levantado las persianas del salón y la cocina un poco antes del amanecer.'
     service: notify.my_notifier
+  - data:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
+        han levantado las persianas del salón y la cocina un poco antes del amanecer.'
+    service: notify.tele_cocina
   - data_template:
-      where: kitchen
-      what: "Buenos días. Se han levantado las persianas del salón y la cocina un poco antes del amanecer. 
-          Esta tarde anochecerá a las {{ as_timestamp(states.sun.sun.attributes.next_setting)  | timestamp_custom('%H:%M') }}."
+      where: living
+      what: Buenos días. Se han levantado las persianas del salón y la cocina un poco
+        antes del amanecer. Esta tarde anochecerá a las {{ as_timestamp(states.sun.sun.attributes.next_setting)  |
+        timestamp_custom('%H:%M') }}.
     service: script.sonos_tts
-###########################################################################################################
 - id: abrirPersianasBajo_fin_de_semana
   alias: Abrir persianas salon y cocina fin de semana sin sonos
   hide_entity: false
@@ -39,29 +40,29 @@
     platform: sun
   condition:
     condition: time
-  # At least one of the following is required.
     weekday:
     - sat
     - sun
   action:
   - data:
-      entity_id: group.main_persianas_cocina_salon,  cover.qubino_zmnhcdx_flush_shutter_switch_2
-      position: 85
+      entity_id: cover.planta_baja,  cover.qubino_zmnhcdx_flush_shutter_level_2
+      position: 90
     service: cover.set_cover_position
   - data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
         han levantado las persianas del salón y la cocina un poco antes del amanecer.'
     service: notify.my_notifier
-###########################################################################################################  
+  - data:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
+        han levantado las persianas del salón y la cocina un poco antes del amanecer.'
+    service: notify.tele_cocina
 - id: abrirPersianas_habitaciones_entre_semana
-  alias: Abrir persianas habitaciones al salir el sol 
-  hide_entity: false
+  alias: Abrir persianas habitaciones al salir el sol
   trigger:
-  - platform: time
-    at: '08:00:00'
+  - at: 08:30:00
+    platform: time
   condition:
-    condition: time
-  # At least one of the following is required.
+  - condition: time
     weekday:
     - mon
     - tue
@@ -70,114 +71,101 @@
     - fri
   action:
   - data:
-      entity_id: group.main_persianas_habitaciones
-      position: 85
+      entity_id: cover.habitaciones
+      position: 90
     service: cover.set_cover_position
   - data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
         han levantado las persianas de las habitaciones al amanecer.'
     service: notify.my_notifier
+  - data:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
+        han levantado las persianas de las habitaciones al amanecer.'
+    service: notify.tele_cocina
   - data_template:
-      where: 'kitchen'
-      what: "Buenos días, se han levantado las persianas de todas las habitaciones al amanecer. ¡¡Espero que tengas un día genial!!."
+      what: Buenos días, se han levantado las persianas de todas las habitaciones
+        a las 7 y 10. ¡¡Espero que tengas un día genial!!.
+      where: living
     service: script.sonos_tts
-###############################################################Cerrar persianas############################
-- action:
-  - alias: CerrarPersianas
-    service: script.close_covers
+  hide_entity: false
+- id: cerrar_persianas
   alias: Cerrar persianas al hacerse de noche
-  condition: # se ha de fijar esta condición para que no pille ese punto de inclinación antes del amanecer
-  - condition: time
-    after: '16:00:00'
-    before: '23:30:00'
-  id: 'cerrar_persianas'
   trigger:
-  #- event: sunset
-  #  offset: 00:45
-  #  platform: sun
-  - platform: numeric_state
+  - above: -4
+    below: '-3'
     entity_id: sun.sun
-    value_template: "{{ state.attributes.elevation }}"
-    # Can be a positive or negative number
-    above: -4.0
-    below: -3.0
-###########################################################################################################
-
-- id: 'CerrarPersianaSalidaCocinadeNoche'
-  alias: 'CerrarPersianaSalidaCocinadeNoche'
+    platform: numeric_state
+    value_template: '{{ state.attributes.elevation }}'
+  condition:
+  - after: '15:00:00'
+    before: '23:00:00'
+    condition: time
+  action:
+  - alias: CerrarPersianas
+    service: script.cerrar_persianas
+- id: CerrarPersianaSalidaCocinadeNoche
+  alias: CerrarPersianaSalidaCocinadeNoche
   trigger:
   - platform: time
     at: '23:00:00'
   action:
     service: cover.close_cover
-    entity_id: cover.qubino_zmnhcdx_flush_shutter_level_2  
-###########################################################################################################
-- id: 'Extractor cocina se apaga'
-  alias: 'Extractor cocina se apaga'
+    entity_id: cover.qubino_zmnhcdx_flush_shutter_level_2
+- id: Luz indirecta cocina se apaga
+  alias: Luz indirecta cocina se apaga
   trigger:
-  - platform: state
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_17
-    to: 'on'
-    for:
-      minutes: 10
-  action:
-    service: switch.turn_off
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_17
-###########################################################################################################
-- id: 'Luz indirecta cocina se apaga'
-  alias: 'Luz indirecta cocina se apaga'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
-    to: 'off'
+  - entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2
     for:
       minutes: 5
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: light.luzindirecta
+    state: 'on'
   action:
-    service: switch.turn_off
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_16
-###########################################################################################################
-- id: 'Luz indirecta cocina se enciende'
-  alias: 'Luz indirecta cocina se enciende'
+  - entity_id: light.luzindirecta
+    service: light.turn_off
+- id: Luz indirecta cocina se enciende
+  alias: Luz indirecta cocina se enciende
   trigger:
-  - platform: state
-    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
+  - entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2
+    platform: state
     to: 'on'
   condition:
-    condition: and
+  - condition: and
     conditions:
-      - condition: numeric_state
-        entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6
-        below: '25'
-      - condition: state
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_16
-        state: 'off'
+    - below: '25'
+      condition: numeric_state
+      entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6
+    - condition: state
+      entity_id: light.luzindirecta
+      state: 'off'
   action:
-    service: switch.turn_on
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_16
-###########################################################################################################
-- id: 'Luces cocina mesa y/o techo se apagan'
-  alias: 'Luces cocina mesa y/o techo se apagan'
+  - entity_id: light.luzindirecta
+    service: light.turn_on
+- id: Luces cocina mesa y/o techo se apagan
+  alias: Luces cocina mesa y/o techo se apagan
   trigger:
   - platform: state
-    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2
     to: 'off'
     for:
       minutes: 15
-  condition:  
+  condition:
     condition: or
     conditions:
-      - condition: state
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
-        state: 'on'
-      - condition: state
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4
-        state: 'on'   
+    - condition: state
+      entity_id: light.luz_mesa
+      state: 'on'
+    - condition: state
+      entity_id: light.luz_techo
+      state: 'on'
   action:
-    - service: switch.turn_off
-      entity_id: switch.switch_12    
-###########################################################################################################
-- id: 'Luz comedor se enciende'
-  alias: 'Luz comedor se enciende'
+  - service: switch.turn_off
+    entity_id: switch.switch_12
+- id: Luz comedor se enciende
+  alias: Luz comedor se enciende
   trigger:
   - platform: state
     entity_id: binary_sensor.sensor_3
@@ -185,34 +173,34 @@
   condition:
     condition: and
     conditions:
-      - condition: numeric_state
-        entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_3
-        below: '25'
-      - condition: state
-        entity_id: light.level
-        state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_3
+      below: '25'
+    - condition: state
+      entity_id: light.level
+      state: 'off'
   action:
     service: light.turn_on
-    entity_id: light.level
-###########################################################################################################
-- id: 'Luz comedor se apaga'
-  alias: 'Luz comedor se apaga'
+    data:
+      entity_id: light.level
+      brightness: 35
+- id: Luz comedor se apaga
+  alias: Luz comedor se apaga
   trigger:
   - platform: state
     entity_id: binary_sensor.sensor_3
     to: 'off'
     for:
-      minutes: 5
+      minutes: 20
   condition:
   - condition: state
     entity_id: light.level
-    state: 'on'   
+    state: 'on'
   action:
     service: light.turn_off
-    entity_id: light.level    
-###########################################################################################################
-- id: 'Luz mesita salón se enciende'
-  alias: 'Luz mesita salón se enciende'
+    entity_id: light.level
+- id: Luz mesita salón se enciende
+  alias: Luz mesita salón se enciende
   trigger:
   - platform: state
     entity_id: binary_sensor.sensor_5
@@ -220,138 +208,159 @@
   condition:
     condition: and
     conditions:
-      - condition: numeric_state
-        entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4
-        below: '25'
-      - condition: state
-        entity_id: light.level_2
-        state: 'off'
-        for:
-          minutes: 6
+    - condition: numeric_state
+      entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4
+      below: '25'
+    - condition: state
+      entity_id: light.level_2
+      state: 'off'
+      for:
+        minutes: 6
   action:
-    - service: light.turn_on
-      entity_id: light.level_2   
-###########################################################################################################
-- id: 'Luz mesita salón se apaga'
-  alias: 'Luz mesita salón se apaga'
+  - service: light.turn_on
+    entity_id: light.level_2
+- id: Luz mesita salón se apaga
+  alias: Luz mesita salón se apaga
   trigger:
   - platform: state
     entity_id: binary_sensor.sensor_5
     to: 'off'
     for:
       minutes: 10
+  - platform: state
+    entity_id: light.level_2
+    to: 'on'
+    for:
+      minutes: 20
   condition:
   - condition: state
     entity_id: light.level_2
-    state: 'on'   
+    state: 'on'
   action:
-    - service: light.turn_off
-      entity_id: light.level_2      
-###########################################################################################################
-- id: 'Leds cine se encienden'
-  alias: 'Leds cine se encienden'
+  - service: light.turn_off
+    entity_id: light.level_2
+- id: Luz lampara lectura se apaga
+  alias: Luz lampara lectura se apaga
   trigger:
   - platform: state
-    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3 #alguien en cine
+    entity_id: switch.switch_22
+    to: 'on'
+    for:
+      minutes: 20
+  action:
+  - service: switch.turn_off
+    entity_id: switch.switch_22
+- id: Leds cine se encienden
+  alias: Leds cine se encienden
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3
     to: 'on'
   condition:
     condition: and
     conditions:
-      - condition: numeric_state
-        entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_7
-        below: '25'
-      - condition: state
-        entity_id: light.cinemalights
-        state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_7
+      below: '25'
+    - condition: state
+      entity_id: light.cinemalights
+      state: 'off'
   action:
     service: light.turn_on
     data:
       entity_id: light.cinemalights
-      brightness: 125
-      rgb_color: [255,255,255]
-###########################################################################################################
-- id: 'Leds cine se apagan'
-  alias: 'Leds cine se apagan'
+      brightness: 25
+      rgb_color:
+      - 255
+      - 255
+      - 255
+- id: Leds cine se apagan
+  alias: Leds cine se apagan
   trigger:
   - platform: state
     entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3
     to: 'off'
     for:
-      minutes: 5
+      minutes: 3
   condition:
   - condition: state
     entity_id: light.cinemalights
-    state: 'on'   
+    state: 'on'
   action:
-    - service: light.turn_off
-      entity_id: light.cinemalights      
-###########################################################################################################
-- id: 'Leds cine se ponen en modo cine'
-  alias: 'Leds cine se ponen en modo cine'
+  - service: light.turn_off
+    entity_id: light.cinemalights
+- id: Leds cine se ponen en modo cine
+  alias: Leds cine se ponen en modo cine
   trigger:
   - platform: state
     entity_id: remote.harmony_hub
     to: 'on'
-    for:
-      seconds: 5
-    
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.cinemalights
-        brightness: 1
-        rgb_color: [0,0,255]
-    - service: automation.turn_off
-      entity_id: automation.leds_cine_se_apagan
-    - service: automation.turn_off
-      entity_id: automation.leds_cine_se_encienden
-###########################################################################################################      
-- id: 'Leds cine vuelven de modo cine'
-  alias: 'Leds cine vuelven de modo cine'
+  - service: light.turn_on
+    data:
+      entity_id: light.cinemalights
+      brightness: 3
+      rgb_color:
+      - 0
+      - 0
+      - 255
+  - service: automation.turn_off
+    entity_id: automation.leds_cine_se_apagan
+  - service: automation.turn_off
+    entity_id: automation.leds_cine_se_encienden
+- id: Leds cine vuelven de modo cine
+  alias: Leds cine vuelven de modo cine
   trigger:
   - platform: state
     entity_id: remote.harmony_hub
     to: 'off'
   - platform: state
     entity_id: remote.harmony_hub
-    to: 'pause'  
-    
+    to: pause
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.cinemalights
-        brightness: 50
-        rgb_color: [255,255,255]
-    - service: automation.turn_on
-      entity_id: automation.leds_cine_se_apagan
-    - service: automation.turn_on
-      entity_id: automation.leds_cine_se_encienden
-###########################################################################################################
-
-- id: 'Luz garaje se enciende'
-  alias: 'Luz garaje se enciende'
+  - service: light.turn_on
+    data:
+      entity_id: light.cinemalights
+      brightness: 25
+      rgb_color:
+      - 255
+      - 255
+      - 255
+  - service: automation.turn_on
+    entity_id: automation.leds_cine_se_apagan
+  - service: automation.turn_on
+    entity_id: automation.leds_cine_se_encienden
+- id: Luz jardin se enciende por presencia
+  alias: Luz jardin se enciende por presencia
   trigger:
   - platform: state
-    entity_id: binary_sensor.sensor_6 #si se abre la puerta del garaje
-    to: 'on'
-  - platform: state
-    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor #o si detecta movimiento en el garaje
+    entity_id: binary_sensor.sensor_2
     to: 'on'
   condition:
     condition: and
     conditions:
-      - condition: numeric_state
-        entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance
-        below: '45'
-      - condition: state
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_9
-        state: 'off'
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+    - condition: state
+      entity_id: switch.luz_jardin
+      state: 'off'
   action:
-    - service: switch.turn_on
-      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_9   
-###########################################################################################################
-- id: 'Luz garaje se enciende por apertura garaje'
-  alias: 'Luz garaje se enciende por apertura garaje'
+  - service: switch.turn_on
+    entity_id: switch.luz_jardin
+- id: Luz jardin se apaga
+  alias: Luz jardin se apaga
+  trigger:
+  - platform: state
+    entity_id: switch.luz_jardin
+    to: 'on'
+    for:
+      minutes: 3
+  action:
+  - service: switch.turn_off
+    entity_id: switch.luz_jardin
+- id: Luz garaje se enciende por apertura garaje
+  alias: Luz garaje se enciende por apertura garaje o movimiento
   trigger:
   - platform: state
     entity_id: switch.switch_16
@@ -362,28 +371,55 @@
   condition:
     condition: and
     conditions:
-      - condition: state
-        entity_id: sun.sun
-        state: 'below_horizon'
-      - condition: state
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_9
-        state: 'off'
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+    - condition: state
+      entity_id: switch.luz_garaje
+      state: 'off'
   action:
-    - service: switch.turn_on
-      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_9   
-###########################################################################################################
-- id: 'Luz garaje se apaga'
-  alias: 'Luz garaje se apaga'
+  - service: switch.turn_on
+    entity_id: switch.luz_garaje
+- id: Luz garaje se apaga
+  alias: Luz garaje se apaga
   trigger:
   - platform: state
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_9
+    entity_id: switch.luz_garaje
     to: 'on'
     for:
       minutes: 3
   action:
-    - service: switch.turn_off
-      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_9      
-#########################################################################Nest a away#######################
+  - service: switch.turn_off
+    entity_id: switch.luz_garaje
+- id: Luz trasera se enciende por movimiento sensor
+  alias: Luz trasera se enciende por movimiento sensor
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_6
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_7
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+  action:
+  - service: light.turn_on
+    entity_id: light.luz_trasera
+- id: Luz trasera se apaga
+  alias: Luz trasera se apaga
+  trigger:
+  - platform: state
+    entity_id: light.luz_trasera
+    to: 'on'
+    for:
+      minutes: 3
+  action:
+  - service: light.turn_off
+    entity_id: light.luz_trasera
 - action:
   - alias: pasar a away
     data:
@@ -398,13 +434,12 @@
   condition:
   - condition: state
     entity_id: climate.living_room
-    state: 'heat'
+    state: heat
   id: '1510528985970'
   trigger:
   - entity_id: group.main_users2
     platform: state
-    to: 'not_home'
-#########################################################################Nest a home#######################
+    to: not_home
 - action:
   - alias: pasar a estado home
     data:
@@ -413,59 +448,60 @@
     service: climate.set_away_mode
   - data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
-        ha fijado el modo Home en Nest por comprobar que Blanca y/o Jorge están en casa.'
+        ha fijado el modo Home en Nest por comprobar que Blanca y/o Jorge están en
+        casa.'
     service: notify.my_notifier
   alias: Pasar Nest a modo Home al detectarnos
   condition:
   - condition: state
     entity_id: climate.living_room
-    state: 'heat'
-  id: 'pasar a estado home'
+    state: heat
+  id: pasar a estado home
   trigger:
   - entity_id: group.main_users2
     platform: state
-    to: 'home'
-#################################################Modo cine en el salón de casa#################################################
-- id: 'Preparar salon para pelicula'
+    to: home
+- id: Preparar salon para pelicula
   alias: Bajar iluminación si ChromecastSalón ON
-  condition: 
-    - condition: numeric_state
-      entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4
-      below: '25'  
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4
+    below: '25'
   trigger:
   - entity_id: media_player.living_room_tv
     platform: state
-    to: 'playing'
-  action: #apagar todas las luces menos la mesita
+    to: playing
+  action:
   - service: automation.turn_off
     entity_id: automation.luz_mesita_salon_se_apaga
   - service: light.turn_off
     entity_id: light.level
   - service: switch.turn_off
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_13, switch.qubino_zmnhbdx_flush_2_relays_switch_14, switch.switch_22
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_13, switch.qubino_zmnhbdx_flush_2_relays_switch_14,
+      switch.switch_22
   - alias: Bajar intensidad luz mesita al 20 y color azul cine
     service: light.turn_on
     data:
       entity_id: light.level_2
       brightness: 20
-      rgb_color: [0,0,255]
-  
-  
-################################################################################################################
-- id: 'Volver por pausa o stop de peli en el salón'
+      rgb_color:
+      - 0
+      - 0
+      - 255
+- id: Volver por pausa o stop de peli en el salón
   alias: Bajar iluminación si ChromecastSalón ON
-  condition: 
-    - condition: numeric_state
-      entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4
-      below: '35'  
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4
+    below: '35'
   trigger:
   - entity_id: media_player.living_room_tv
     platform: state
     to: 'off'
   - entity_id: media_player.living_room_tv
     platform: state
-    to: 'paused'
-  action: #apagar todas las luces menos la mesita
+    to: paused
+  action:
   - service: light.turn_off
     entity_id: light.level
   - service: switch.turn_on
@@ -475,23 +511,30 @@
     data:
       entity_id: light.level_2
       brightness: 100
-      rgb_color: [255,226,145]  
+      rgb_color:
+      - 255
+      - 226
+      - 145
   - service: automation.turn_on
     entity_id: automation.luz_mesita_salon_se_apaga
-############################################################Nest enciende caldera###########################
 - action:
   - alias: Nest enciende caldera
     data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Nest
         ha encendido la caldera.'
     service: notify.my_notifier
+  - alias: Nest enciende caldera webostv
+    data:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Nest
+        ha encendido la caldera.'
+    service: notify.tele_cocina
   - data_template:
-      master: 'kitchen'
-      volume: 0.40
-      what: "Hola, Nest acaba de encender la caldera. 
-            Por favor, mantenga la casa y ventanas cerradas, gracias."
+      master: living
+      volume: 0.4
+      what: Hola, Nest acaba de encender la caldera. Por favor, mantenga la casa y
+        ventanas cerradas, gracias.
     service: script.sonos_tts_todos
-  alias: Avisad si Nest arranca caldera  
+  alias: Avisad si Nest arranca caldera
   condition: []
   id: '1512145966395'
   trigger:
@@ -502,8 +545,7 @@
   - entity_id: sensor.living_room_thermostat_hvac_state
     from: eco
     platform: state
-    to: heating  
-#############################################################Activar timer con la puerta de garaje#####
+    to: heating
 - action:
   - data:
       entity_id: timer.puerta_garaje
@@ -512,10 +554,9 @@
   alias: Timer garaje arranca
   id: Timerstart_garaje
   trigger:
-  - entity_id: binary_sensor.sensor_6
+  - entity_id: binary_sensor.neo_coolcam_doorwindow_detector_sensor
     platform: state
     to: 'on'
-#############################################################Cerrar puerta de garaje auto################
 - action:
   - alias: Cerrar puerta garaje
     data:
@@ -523,7 +564,7 @@
     service: switch.turn_on
   condition:
   - condition: state
-    entity_id: binary_sensor.sensor_6
+    entity_id: binary_sensor.neo_coolcam_doorwindow_detector_sensor
     state: 'on'
   alias: Cierre automático puerta garaje
   id: Timerstop garaje
@@ -532,7 +573,6 @@
       entity_id: timer.puerta_garaje
     event_type: timer.finished
     platform: event
-#############################################################Cancelar timer si puerta ya cerrada############
 - action:
   - data:
       entity_id: timer.puerta_garaje
@@ -541,33 +581,37 @@
   alias: Timer garaje se para
   id: Timercancel_garaje
   trigger:
-  - entity_id: binary_sensor.sensor_6
+  - entity_id: binary_sensor.neo_coolcam_doorwindow_detector_sensor
     platform: state
     to: 'off'
-###############################################################Aviso puerta abierta + de 3 min###########
 - action:
   - data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - La
         puerta de garaje se ha quedado abierta más de 3 minutos. Por favor, comprueba
         su estado.'
-    service: notify.my_notifier   
+    service: notify.my_notifier
+  - data:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - La
+        puerta de garaje se ha quedado abierta más de 3 minutos. Por favor, comprueba
+        su estado.'
+    service: notify.tele_cocina
   - data_template:
-      master: 'kitchen'
-      volume: 0.40
-      what: "Hola, parece que la puerta del garaje lleva abierta más de 3 minutos.
-            Por favor, compruébelo y cierre la puerta si es posible, gracias."
+      master: living
+      volume: 0.4
+      what: Hola, parece que la puerta del garaje lleva abierta más de 3 minutos.
+        Por favor, compruébelo y cierre la puerta si se ha quedado completamente abierta,
+        gracias.
     service: script.sonos_tts_todos
   alias: Aviso puerta garaje abierta
-  id: 'Aviso puerta garaje abierta más de 3 minutos'
+  id: Aviso puerta garaje abierta más de 3 minutos
   trigger:
-  - entity_id: binary_sensor.sensor_6
+  - entity_id: binary_sensor.neo_coolcam_doorwindow_detector_sensor
     for:
       hours: 0
       minutes: 3
       seconds: 0
     platform: state
     to: 'on'
-###############################################################Info Buenos dias##########################
 - id: autoBuenosDias
   alias: Dar los buenos dias aportando info
   hide_entity: false
@@ -578,20 +622,19 @@
   condition:
     condition: and
     conditions:
-      - condition: time
-        after: '07:00:00'
-        before: '09:00:00'
-      - condition: state
-        entity_id: input_boolean.ya_informado
-        state: 'off'
-      - condition: time
-  # At least one of the following is required.
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
+    - condition: time
+      after: 07:00:00
+      before: 09:00:00
+    - condition: state
+      entity_id: input_boolean.ya_informado
+      state: 'off'
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
   action:
   - service: script.buenos_dias
   - service: input_boolean.turn_on
@@ -601,26 +644,24 @@
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
         ha dado la información matinal.'
     service: notify.my_notifier
-################################################################Reseteo booleanas#####################
 - id: resetear booleanas
   alias: Reseteo booleanas
   trigger:
   - platform: time
-    at: '00:05:00'
-  action:  
+    at: 00:05:00
+  action:
   - service: input_boolean.turn_off
     data:
       entity_id: input_boolean.ya_informado
-#########################################################################################################
 - id: abrirCancelaExterior
   alias: abrirCancelaExterior
-  trigger: 
-    - platform: state
-      entity_id: switch.skybell_front_door_do_not_disturb #en la app es INDOOR CHIME
-      to: 'on'
-    - platform: state
-      entity_id: switch.skybell_front_door_do_not_disturb #en la app es INDOOR CHIME
-      to: 'off'  
+  trigger:
+  - platform: state
+    entity_id: switch.skybell_front_door_do_not_disturb
+    to: 'on'
+  - platform: state
+    entity_id: switch.skybell_front_door_do_not_disturb
+    to: 'off'
   action:
   - data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
@@ -629,83 +670,25 @@
   - service: switch.turn_on
     data:
       entity_id: switch.switch_13
-########################################################################################################
-
 - id: encender luces frontales
-  alias: 'encender luces frontales'
-  trigger: 
+  alias: encender luces frontales
+  trigger:
   - platform: state
-    entity_id: binary_sensor.skybell_front_door_motion 
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_4, binary_sensor.skybell_front_door_motion
     to: 'on'
-  - platform: state
-    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_4
-    to: 'on' 
   condition:
   - condition: state
     entity_id: switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch
     state: 'off'
   - condition: state
     entity_id: sun.sun
-    state: 'below_horizon'
+    state: below_horizon
   action:
-  - data:  
+  - data:
       entity_id: switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch
     service: switch.turn_on
-  - data:
-      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
-              ha detectado movimiento en la puerta exterior. Comprueba la cámara de SkyBell HD.'
-    service: notify.my_notifier  
-  #- data_template:
-  #    master: 'kitchen'
-  #    volume: 0.40
-  #    what: "Atención, se ha detectado movimiento prolongado en la puerta de acceso exterior.
-  #          Por favor, compruébalo con la cámara de scaibell hd, gracias."
-  #  service: script.sonos_tts_todos
-#########################################################################################################
-- id: apagar luz SkyBell
-  alias: apagar luz SkyBell
-  hide_entity: false
-  trigger:
-  - platform: time
-    at: '22:00:00'
-  condition:
-  - condition: state
-    entity_id: light.front_door
-    state: 'on'
-  action:
-  - service: light.turn_off
-    data:
-      entity_id: light.front_door
-  #- data:
-  #    message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
-  #      ha apagado la luz frontal de Skybell HD.'
-  #  service: notify.my_notifier
- 
-
- #####################################################################################################
-
-- id: encender luz SkyBell
-  alias: encender luz SkyBell
-  hide_entity: false
-  trigger:
-  - platform: time
-    at: '13:00:00'
-  condition:
-  - condition: state
-    entity_id: light.front_door
-    state: 'off'
-  action:
-  - service: light.turn_on
-    data:
-      entity_id: light.front_door
-  #- data:
-  #    message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
-  #      ha encendido la luz frontal de Skybell HD.'
-  #  service: notify.my_notifier
- ####################################################################################################
-
-- id: 'Luz puerta entrada casa se apaga'
-  alias: 'Luz puerta entrada casa se apaga'
+- id: Luz puerta entrada casa se apaga
+  alias: Luz puerta entrada casa se apaga
   trigger:
   - platform: state
     entity_id: switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch
@@ -714,153 +697,243 @@
       minutes: 5
   action:
     service: switch.turn_off
-    entity_id: switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch    
-######################################################################################################### 
-- id: 'Detección y notificación movimiento con alarma activada'
-  alias: 'Detección y notificación movimiento con alarma activada'
+    entity_id: switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch
+- id: Detección y notificación movimiento con alarma activada
+  alias: Detección y notificación movimiento con alarma activada
   trigger:
-  - platform: state #solo activo con sensor salon, cocina y comedor de momento
-    entity_id: binary_sensor.sensor_3, binary_sensor.sensor_4, binary_sensor.sensor_5, binary_sensor.sensor_2, binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2, binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3 #binary_sensor.sensor_6 dejo fuera la entrada y la puerta del garaje
+  - platform: state
+    entity_id: binary_sensor.sensor_3
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.sensor_4
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.sensor_5
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_8
     to: 'on'
   condition:
-      - condition: state
-        entity_id: input_boolean.alarma_activada
-        state: 'on'    
-        for: 
-          seconds: 30
+  - condition: state
+    entity_id: alarm_control_panel.alarma_byj
+    state: armed_away
+  action:
+  - service: alarm_control_panel.alarm_trigger
+    entity_id: alarm_control_panel.alarma_byj
+  - service: notify.my_notifier
+    data_template:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - ¡¡ATENCIÓN!!
+        - Se ha detectado {{ trigger.to_state.attributes.friendly_name }}'
+- alias: Send notification when alarm triggered
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.alarma_byj
+    to: triggered
+  action:
+  - data_template:
+      master: living
+      volume: 0.85
+      what: Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA. Se ha procedido
+        a avisar a los propietarios y a la policía. ¡¡Abandone ahora mismo esta propiedad
+        privada!! Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA. Se
+        ha procedido a avisar a los propietarios y a la policía. ¡¡Abandone ahora
+        mismo esta propiedad privada!! Atención, se ha detectado movimiento NO AUTORIZADO
+        EN LA CASA. Se ha procedido a avisar a los propietarios y a la policía. ¡¡Abandone
+        ahora mismo esta propiedad privada!! Atención, se ha detectado movimiento
+        NO AUTORIZADO EN LA CASA. Se ha procedido a avisar a los propietarios y a
+        la policía. ¡¡Abandone ahora mismo esta propiedad privada!! Atención, se ha
+        detectado movimiento NO AUTORIZADO EN LA CASA. Se ha procedido a avisar a
+        los propietarios y a la policía. ¡¡Abandone ahora mismo esta propiedad privada!!
+        Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA. Se ha procedido
+        a avisar a los propietarios y a la policía. ¡¡Abandone ahora mismo esta propiedad
+        privada!!
+    service: script.sonos_tts_todos
+  - service: notify.my_notifier
+    data_template:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - ¡¡ATENCIÓN!!
+        - Se ha detectado movimiento NO AUTORIZADO {{ trigger.to_state.attributes.friendly_name
+        }}'
+- id: Desactivar automatizaciones al activar alarmas
+  alias: Desactivar automatizaciones al activar alarmas
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.alarma_byj
+    from: disarmed
+  action:
+  - data_template:
+      master: living
+      volume: 0.3
+      what: ¡Atención!, dispone sólo de 30 segundos para abandonar la casa. La alarma
+        ha sido activada, ¡gracias! ¡Atención!, dispone sólo de 30 segundos para abandonar
+        la casa. La alarma ha sido activada, ¡gracias!
+    service: script.sonos_tts_todos
+  - service: automation.turn_off
+    entity_id: automation.abrir_persianas_habitaciones_al_salir_el_sol, automation.abrir_persianas_salon_y_cocina_entre_semana,
+      automation.abrir_persianas_salon_y_cocina_fin_de_semana_sin_sonos, automation.bajar_iluminacion_si_chromecastsalon_on,
+      automation.cerrar_persianas_al_hacerse_de_noche, automation.dar_los_buenos_dias_aportando_info,
+      automation.pasar_nest_a_modo_eco_cuando_todos_fuera, automation.pasar_nest_a_modo_home_al_detectarnos
+- id: Reactivar automatizaciones al desactivar alarma
+  alias: Reactivar automatizaciones al desactivar alarma
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.alarma_byj
+    to: disarmed
+  action:
+  - data_template:
+      master: living
+      volume: 0.3
+      what: ' La alarma ha sido desactivada. Es seguro entrar en casa, gracias.'
+    service: script.sonos_tts_todos
+  - service: automation.turn_on
+    entity_id: automation.abrir_persianas_habitaciones_al_salir_el_sol, automation.abrir_persianas_salon_y_cocina_entre_semana,
+      automation.abrir_persianas_salon_y_cocina_fin_de_semana_sin_sonos, automation.bajar_iluminacion_si_chromecastsalon_on,
+      automation.cerrar_persianas_al_hacerse_de_noche, automation.dar_los_buenos_dias_aportando_info,
+      automation.pasar_nest_a_modo_eco_cuando_todos_fuera, automation.pasar_nest_a_modo_home_al_detectarnos
+- id: Desactivar alarma al acercarse a casa
+  alias: Desactivar alarma al acercarse a casa
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.alarma_byj
+    state: armed_away
+    for:
+      seconds: 100
+  trigger:
+  - platform: state
+    entity_id: person.blanca, person.patricia, person.sara, person.jorge
+    to: home
   action:
   - service: notify.my_notifier
     data_template:
-      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - ¡¡ATENCIÓN!! - Se
-        ha detectado {{ trigger.to_state.attributes.friendly_name }}'
-  - data_template:
-      master: 'kitchen'
-      volume: 0.80
-      what: "Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA.
-            Se ha procedido a avisar a los propietarios y a la policía.
-            ¡¡Abandone ahora mismo esta propiedad privada!!
-            Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA.
-            Se ha procedido a avisar a los propietarios y a la policía.
-            ¡¡Abandone ahora mismo esta propiedad privada!!
-            Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA.
-            Se ha procedido a avisar a los propietarios y a la policía.
-            ¡¡Abandone ahora mismo esta propiedad privada!!
-            Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA.
-            Se ha procedido a avisar a los propietarios y a la policía.
-            ¡¡Abandone ahora mismo esta propiedad privada!!
-            Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA.
-            Se ha procedido a avisar a los propietarios y a la policía.
-            ¡¡Abandone ahora mismo esta propiedad privada!!
-            Atención, se ha detectado movimiento NO AUTORIZADO EN LA CASA.
-            Se ha procedido a avisar a los propietarios y a la policía.
-            ¡¡Abandone ahora mismo esta propiedad privada!!"
-    service: script.sonos_tts_todos
-#########################################################################################################  
-- id: 'Desactivar automatizaciones al activar alarmas'    
-  alias: 'Desactivar automatizaciones al activar alarmas'
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
+        ha desactivado la alarma al detectar a {{ trigger.to_state.attributes.friendly_name
+        }} en casa'
+  - service: alarm_control_panel.alarm_disarm
+    entity_id: alarm_control_panel.alarma_byj
+- id: Detección de fugas de agua con aviso activado
+  alias: Detección de fugas de agua con aviso activado
   trigger:
   - platform: state
-    entity_id: input_boolean.alarma_activada
-    to: 'on'
-  action:
-    - data_template:
-        master: 'kitchen'
-        volume: 0.65
-        what: "¡Atención!, dispone sólo de 30 segundos para abandonar la casa. La alarma ha sido activada, ¡gracias!
-              ¡Atención!, dispone sólo de 30 segundos para abandonar la casa. La alarma ha sido activada, ¡gracias!"
-      service: script.sonos_tts_todos
-    - service: automation.turn_off
-      entity_id: automation.abrir_persianas_habitaciones_al_salir_el_sol, automation.abrir_persianas_salon_y_cocina_entre_semana, automation.abrir_persianas_salon_y_cocina_fin_de_semana_sin_sonos, automation.bajar_iluminacion_si_chromecastsalon_on, automation.cerrar_persianas_al_hacerse_de_noche, automation.dar_los_buenos_dias_aportando_info, automation.pasar_nest_a_modo_eco_cuando_todos_fuera, automation.pasar_nest_a_modo_home_al_detectarnos
-#########################################################################################################   
-- id: 'Reactivar automatizaciones al desactivar alarma'    
-  alias: 'Reactivar automatizaciones al desactivar alarma'
-  trigger:
-  - platform: state
-    entity_id: input_boolean.alarma_activada
-    to: 'off'
-  action:
-    - data_template:
-        master: 'kitchen'
-        volume: 0.65
-        what: " La alarma ha sido desactivada. Es seguro entrar en casa, gracias."
-      service: script.sonos_tts_todos
-    - service: automation.turn_on
-      entity_id: automation.abrir_persianas_habitaciones_al_salir_el_sol, automation.abrir_persianas_salon_y_cocina_entre_semana, automation.abrir_persianas_salon_y_cocina_fin_de_semana_sin_sonos, automation.bajar_iluminacion_si_chromecastsalon_on, automation.cerrar_persianas_al_hacerse_de_noche, automation.dar_los_buenos_dias_aportando_info, automation.pasar_nest_a_modo_eco_cuando_todos_fuera, automation.pasar_nest_a_modo_home_al_detectarnos
-#########################################################################################################  
-- id: 'Desactivar alarma al acercarse a casa'    
-  alias: 'Desactivar alarma al acercarse a casa'
-  condition:
-      - condition: state
-        entity_id: input_boolean.alarma_activada
-        state: 'on'    
-        for: 
-          seconds: 30
-  trigger:
-  - platform: state
-    entity_id: device_tracker.bgphone_bgphone, device_tracker.blanca_mi_a1_ping, device_tracker.jlphone_jlphone, device_tracker.jorge_mate10_ping #device_tracker.patricia_axon7mini_ping, device_tracker.ttxjalpp_plphone
-    to: 'home'
-  action:
-    - service: notify.my_notifier
-      data_template:
-        message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
-              ha desactivado la alarma al detectar a {{ trigger.to_state.attributes.friendly_name }}'
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.alarma_activada
-######################################################################################################### 
-
-- id: 'Detección de fugas de agua con aviso activado'
-  alias: 'Detección de fugas de agua con aviso activado'
-  trigger:
-  - platform: state #solo activo con sensor salon, cocina y comedor de momento
-    entity_id: binary_sensor.neo_coolcam_water_leakage_detector_sensor, binary_sensor.neo_coolcam_water_leakage_detector_sensor_2, binary_sensor.neo_coolcam_water_leakage_detector_sensor_3, binary_sensor.neo_coolcam_water_leakage_detector_sensor_4 
+    entity_id: binary_sensor.neo_coolcam_water_leakage_detector_sensor, binary_sensor.neo_coolcam_water_leakage_detector_sensor_2,
+      binary_sensor.neo_coolcam_water_leakage_detector_sensor_3, binary_sensor.neo_coolcam_water_leakage_detector_sensor_4
     to: 'on'
     for:
       seconds: 5
   action:
   - service: notify.my_notifier
     data_template:
-      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - ¡¡ATENCIÓN!! - Se
-        ha detectado una {{ trigger.to_state.attributes.friendly_name }}. Por favor, corte la 
-        llave del agua y tome las medidas oportunas.'
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - ¡¡ATENCIÓN!!
+        - Se ha detectado una {{ trigger.to_state.attributes.friendly_name }}. Por
+        favor, corte la llave del agua y tome las medidas oportunas.'
+  - service: notify.tele_cocina
+    data_template:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - ¡¡ATENCIÓN!!
+        - Se ha detectado una {{ trigger.to_state.attributes.friendly_name }}. Por
+        favor, corte la llave del agua y tome las medidas oportunas.'
   - data_template:
-      master: 'kitchen'
-      volume: 0.80
-      what: "¡¡ATENCIÓN!! - Se ha detectado una {{ trigger.to_state.attributes.friendly_name }}. Repito, se ha detectado 
-            una {{ trigger.to_state.attributes.friendly_name }}. Por favor, corte la llave del agua y tome las medidas oportunas.
-            ¡¡ATENCIÓN!! - Se ha detectado una {{ trigger.to_state.attributes.friendly_name }}. Repito, se ha detectado 
-            una {{ trigger.to_state.attributes.friendly_name }}. Por favor, corte la llave del agua y tome las medidas oportunas."            
+      master: living
+      volume: 0.8
+      what: ¡¡ATENCIÓN!! - Se ha detectado una {{ trigger.to_state.attributes.friendly_name
+        }}. Repito, se ha detectado una {{ trigger.to_state.attributes.friendly_name
+        }}. Por favor, corte la llave del agua y tome las medidas oportunas. ¡¡ATENCIÓN!!
+        - Se ha detectado una {{ trigger.to_state.attributes.friendly_name }}. Repito,
+        se ha detectado una {{ trigger.to_state.attributes.friendly_name }}. Por favor,
+        corte la llave del agua y tome las medidas oportunas.
     service: script.sonos_tts_todos
-
-
-  #########################################################################################################  
-- id: 'Cinema LEDs animation speed'
-  alias: 'Cinema LEDs animation speed'
-  initial_state: True
-  hide_entity: False
+- id: Cinema LEDs animation speed
+  alias: Cinema LEDs animation speed
+  hide_entity: false
   trigger:
-    - platform: state
-      entity_id: input_number.cinema_slider
+  - platform: state
+    entity_id: input_number.cinema_slider
   action:
-    - service: mqtt.publish
-      data_template:
-        topic: "leds/cine/set"
-        payload: '{"transition":{{ trigger.to_state.state | int }}}'      
-##################################################################################################
-- id: 'Configurar permisos IDS en arranque'
-  alias: 'Configurar permisos IDS en arranque'
+  - service: mqtt.publish
+    data_template:
+      topic: leds/cine/set
+      payload: '{"transition":{{ trigger.to_state.state | int }}}'
+- id: Lavadora ha terminado
+  alias: Lavadora ha terminado
+  initial_state: false
   trigger:
-         platform: homeassistant
-         event: start
+  - platform: numeric_state
+    entity_id: sensor.lavadora_watts
+    below: 6
+    for:
+      minutes: 2
   action:
-    - service: shell_command.set_ids_permissions
-##################################################################################################
-########################################################################################################
-#- id: se activa timbre sonos
-#  alias: se activa timbre sonos
-#  trigger:
-#    platform: state
-#    entity_id: binary_sensor.skybell_front_door_button #sensor.pushbullet_title  #al modificarse el id con una nueva notificacion de pulsar  
-#    to: 'on'
-#  action:
-#    - service: script.llaman_puerta      
-#########################################################################################################   
+  - data_template:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - La
+        lavadora ha terminado. La colada está lista para tenderse.'
+    service: notify.my_notifier
+  - data_template:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - La
+        lavadora ha terminado. La colada está lista para tenderse.'
+    service: notify.tele_cocina
+  - data_template:
+      master: living
+      volume: 0.5
+      what: Hola. La lavadora ha terminado de hacer la colada. Por favor, Patricia
+        y Sara, ¡ya tenéis preparada la ropa para tenderla cuanto antes!. ¡Gracias!
+    service: script.sonos_tts_todos
+- alias: Shelly Status Info at Start
+  id: ssias
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - service: mqtt.publish
+    data:
+      topic: shellies/command
+      payload: update
+- id: '1557875439415'
+  alias: Leds cine se apagan tras arrancar HA
+  trigger:
+  - event: start
+    platform: homeassistant
+  action:
+  - data:
+      entity_id: light.cinemalights
+    entity_id: light.cinemalights
+    service: light.turn_off
+- id: '1558283922090'
+  alias: Luz indirecta cambia con interruptor
+  trigger:
+  - entity_id: switch.luz_indirecta_sw
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: switch.luz_indirecta_sw
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id: light.luzindirecta
+    service: light.toggle
+- id: '1560524856544'
+  alias: Quitar riego por lluvia
+  trigger:
+  - above: '0.5'
+    entity_id: sensor.dark_sky_precip_intensity_0d
+    platform: numeric_state
+  condition: []
+  action:
+  - service: shell_command.disable_os_bee_programs
+- id: '1560873562955'
+  alias: Cena preparada
+  trigger: []
+  condition: []
+  action:
+  - service: script.aviso_cena
+- id: '1560873648393'
+  alias: Comida lista
+  trigger: []
+  condition: []
+  action:
+  - service: script.aviso_comida

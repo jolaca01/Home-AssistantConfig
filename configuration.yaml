@@ -12,39 +12,75 @@ homeassistant:
   time_zone: Europe/Madrid
   # Customization file
   customize: !include customize.yaml
+  auth_providers:
+  - type: homeassistant
+  #- type: legacy_api_password
+  # api_password: !secret http_api_password
+# Example configuration.yaml entry
+alarm_control_panel:
+  - platform: manual
+    name: alarma_byj
+    code: !secret alarm_code
+    pending_time: 30
+    delay_time: 0
+    trigger_time: 60
+    
+    
 
 
-binary_sensor:
-  - platform: skybell
-    monitored_conditions:
-      - button
-      - motion
-  
+
+
+
+#binary_sensor:
+#  - platform: skybell
+#    monitored_conditions:
+#      - button
+#      - motion  
+
+bmw_connected_drive:
+  name: 
+    username: !secret bmw_username
+    password: !secret bmw_password
+    region: "rest_of_world"
 
 camera:
-  - platform: yi
-    name: salon
-    host: '192.168.86.20'
-    password: !secret password_camera_salon
+  - platform: ffmpeg
+    name: yi_salon
+    input: -rtsp_transport tcp -i rtsp://192.168.86.20/ch0_0.h264     
+  - platform: ffmpeg
+    name: yi_garaje
+    input: -rtsp_transport tcp -i rtsp://192.168.86.21/ch0_1.h264  
+  - platform: ffmpeg
+    name: yi_trasera
+    input: -rtsp_transport tcp -i rtsp://192.168.86.152/ch0_1.h264  
+  - platform: ffmpeg
+    name: yi_outdoor
+    input: -rtsp_transport tcp -i rtsp://192.168.86.147/ch0_0.h264  
+  #- platform: yi
+  #  name: salon
+  #  host: '192.168.86.20'
+  #  password: !secret password_camera_salon
     #path: /tmp/sd/record
     #ffmpeg_arguments: '-vf scale=800:450'  
-  - platform: skybell  
+  #- platform: skybell 
+  #  monitored_conditions:
+  #  - activity
   - platform: mjpeg
     name: entrada
     mjpeg_url: http://192.168.86.42/video/mjpg.cgi
     still_image_url: http://192.168.86.42/image/jpeg.cgi
     username: !secret user_camera_entrada
     password: !secret password_camera_entrada  
-  - platform: yi
-    name: kitchen
-    host: '192.168.86.21'
-    password: !secret password_camera_kitchen
-    path: /tmp/sd/record
-  - platform: yi
-    name: exterior_trasera
-    host: '192.168.86.152'
-    password: !secret password_camera_ext_trasera
-    path: /tmp/sd/record  
+  #- platform: yi
+  #  name: kitchen
+  #  host: '192.168.86.21'
+  #  password: !secret password_camera_kitchen
+  #  path: /tmp/sd/record
+  #- platform: yi
+  #  name: exterior_trasera
+  #  host: '192.168.86.152'
+  #  password: !secret password_camera_ext_trasera
+  #  path: /tmp/sd/record  
 cloud:
   google_actions:
     filter:
@@ -53,9 +89,102 @@ cloud:
         - switch
         - light
         - input_boolean
+        - media_player
+        - camera
+        - sensor
+        - script
       exclude_entities:
         - switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch_2
         #- switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch_3
+        - switch.luz_cama
+        - switch.luz_armarios
+        - switch.switch_2
+        - switch.switch_3
+        - switch.switch_4
+        - switch.switch_5
+        - switch.switch_6
+        - switch.switch_7
+        - switch.switch_8
+        - switch.switch_9
+        - switch.switch_10
+        - switch.switch_11
+        - switch.switch_12
+        - switch.switch_14
+        - switch.switch_15
+        - switch.switch_17
+        - switch.switch_18
+        - switch.switch_19
+        - switch.switch_20
+        - switch.switch_21
+        - switch.switch_23
+        - switch.switch_24
+        - switch.qubino_zmnhcdx_flush_shutter_switch
+        - switch.qubino_zmnhcdx_flush_shutter_switch_2
+        - switch.qubino_zmnhcdx_flush_shutter_switch_3
+        - switch.qubino_zmnhcdx_flush_shutter_switch_4
+        - cover.switch_2
+        - cover.switch_3
+        - cover.switch_4
+        - cover.switch_5
+        - cover.switch_6
+        - cover.switch_7
+        - cover.switch_8
+        - cover.switch_9
+        - cover.switch_10
+        - cover.switch_11
+        - cover.switch_12
+        - cover.switch_13 
+        - cover.switch_14
+        - cover.fibaro_system_fgrm222_roller_shutter_controller_2_switch
+        - switch.fibaro_system_fgrm222_roller_shutter_controller_2_level
+        - cover.qubino_zmnhcdx_flush_shutter_switch
+        - cover.qubino_zmnhcdx_flush_shutter_switch_2
+        - cover.qubino_zmnhcdx_flush_shutter_switch_3
+        - cover.qubino_zmnhcdx_flush_shutter_switch_4
+        - switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch
+        - switch.luz_jardin
+        - switch.switch_13
+        - switch.luz_garaje
+        - switch.qubino_zmnhbdx_flush_2_relays_switch
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_3
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_4
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_7
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_8
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_10
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_11
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_12
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_13
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_14
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_15
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_16
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_17
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_18
+        - light.fibaro_system_fgd212_dimmer_2_level
+        - input_boolean.ya_informado
+  alexa:
+    filter:
+      include_entities:
+        - automation.cena_preparada
+        - automation.comida_lista
+      include_domains:
+        - cover
+        - switch
+        - light
+        - climate
+        - script
+        - camera
+        - sensor
+        - input_boolean
+      exclude_domains:
+        - automation
+        # - script
+      exclude_entities:
+        - switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch_2
+        - cover.fibaro_system_fgrm222_roller_shutter_controller_2_switch
+        - switch.fibaro_system_fgrm222_roller_shutter_controller_2_level
+        #- switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch_3
+        - switch.luz_cama
+        - switch.luz_armarios
         - switch.switch_2
         - switch.switch_3
         - switch.switch_4
@@ -97,10 +226,23 @@ cloud:
         - cover.qubino_zmnhcdx_flush_shutter_switch_2
         - cover.qubino_zmnhcdx_flush_shutter_switch_3
         - cover.qubino_zmnhcdx_flush_shutter_switch_4
+        - switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch
+        - switch.luz_jardin
+        - switch.switch_13
+        - switch.luz_garaje
         - switch.qubino_zmnhbdx_flush_2_relays_switch_7
+        - switch.qubino_zmnhbdx_flush_2_relays_switch
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_3
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_4
         - switch.qubino_zmnhbdx_flush_2_relays_switch_8
         - switch.qubino_zmnhbdx_flush_2_relays_switch_10
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_11
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_12
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_13
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_14
         - switch.qubino_zmnhbdx_flush_2_relays_switch_15
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_16
+        - switch.qubino_zmnhbdx_flush_2_relays_switch_17
         - switch.qubino_zmnhbdx_flush_2_relays_switch_18
         - light.fibaro_system_fgd212_dimmer_2_level
         - input_boolean.ya_informado
@@ -114,6 +256,87 @@ config:
 # Show links to resources in log and frontend
 
 cover:
+  
+  - platform: mqtt
+    name: persiana_sara
+    command_topic: "shellies/shellyswitch-5A491C/roller/0/command"
+    position_topic: "shellies/shellyswitch-5A491C/roller/0/pos"
+    set_position_topic: "shellies/shellyswitch-5A491C/roller/0/command/pos"
+    availability_topic: "shellies/shellyswitch-5A491C/online"
+    payload_available: "true"
+    payload_not_available: "false"
+    qos: 1
+    retain: false
+    payload_open: "open"
+    payload_close: "close"
+    payload_stop: "stop"
+    position_open: 100
+    position_closed: 0
+    optimistic: false    
+  - platform: mqtt
+    name: toldo_exterior
+    command_topic: "shellies/shellyswitch-5A4CA4/roller/0/command"
+    position_topic: "shellies/shellyswitch-5A4CA4/roller/0/pos"
+    set_position_topic: "shellies/shellyswitch-5A4CA4/roller/0/command/pos"
+    availability_topic: "shellies/shellyswitch-5A4CA4/online"
+    payload_available: "true"
+    payload_not_available: "false"
+    qos: 1
+    retain: false
+    payload_open: "open"
+    payload_close: "close"
+    payload_stop: "stop"
+    position_open: 100
+    position_closed: 0
+    optimistic: false    
+  - platform: mqtt
+    name: buhardilla2
+    command_topic: "shellies/shellyswitch25-000287/roller/0/command"
+    position_topic: "shellies/shellyswitch25-000287/roller/0/pos"
+    set_position_topic: "shellies/shellyswitch25-000287/roller/0/command/pos"
+    availability_topic: "shellies/shellyswitch25-000287/online"
+    payload_available: "true"
+    payload_not_available: "false"
+    qos: 1
+    retain: false
+    payload_open: "open"
+    payload_close: "close"
+    payload_stop: "stop"
+    position_open: 100
+    position_closed: 0
+    optimistic: false 
+  - platform: mqtt
+    name: buhardilla1
+    command_topic: "shellies/shellyswitch-5A44BC/roller/0/command"
+    position_topic: "shellies/shellyswitch-5A44BC/roller/0/pos"
+    set_position_topic: "shellies/shellyswitch-5A44BC/roller/0/command/pos"
+    availability_topic: "shellies/shellyswitch-5A44BC/online"
+    payload_available: "true"
+    payload_not_available: "false"
+    qos: 1
+    retain: false
+    payload_open: "open"
+    payload_close: "close"
+    payload_stop: "stop"
+    position_open: 100
+    position_closed: 0
+    optimistic: false   
+  - platform: mqtt
+    name: buhardilla3
+    command_topic: "shellies/shellyswitch-55BE1D/roller/0/command"
+    position_topic: "shellies/shellyswitch-55BE1D/roller/0/pos"
+    set_position_topic: "shellies/shellyswitch-55BE1D/roller/0/command/pos"
+    availability_topic: "shellies/shellyswitch-55BE1D/online"
+    payload_available: "true"
+    payload_not_available: "false"
+    qos: 1
+    retain: false
+    payload_open: "open"
+    payload_close: "close"
+    payload_stop: "stop"
+    position_open: 100
+    position_closed: 0
+    optimistic: false     
   - platform: group
     name: habitacion_1
     entities:
@@ -125,6 +348,19 @@ cover:
       - cover.level_8 #Patri persiana 1
       - cover.qubino_zmnhcdx_flush_shutter_level_3 #Patri persiana 2, antes cover.level_7
   - platform: group
+    name: persianas_buhardilla
+    entities:
+      - cover.buhardilla1 
+      - cover.buhardilla2 
+      - cover.buhardilla3
+  - platform: group
+    name: habitaciones
+    entities:
+      - cover.habitacion_1 #persiana 1
+      - cover.habitacion_patri
+      - cover.persiana_sara
+      - cover.persianas_buhardilla
+  - platform: group
     name: salon
     entities:
       - cover.qubino_zmnhcdx_flush_shutter_level #persiana salón 1 - antes cover.level_5 
@@ -133,21 +369,27 @@ cover:
       - cover.level_6  # persiana salón 4
   - platform: group
     name: cocina
-    entities: #se deja la persiana cocina 2 de salida intencionadamente fuera del grupo
+    entities: 
       - cover.level_12 #persian cocina 1 
-      - cover.level #persian cocina 3
+      - cover.qubino_zmnhcdx_flush_shutter_level_2 #persiana cocina 2
+      - cover.fibaro_system_fgrm222_roller_shutter_controller_2_level #persian cocina 3
       - cover.level_13 #persian cocina 4
-      - cover.level_14 #persiana aseo    
-
-
+      - cover.level_14 #persiana aseo      
+  - platform: group
+    name: planta_baja
+    entities: 
+      - cover.salon
+      - cover.cocina          
 device_tracker:
-  - platform: owntracks
-    max_gps_accuracy: 200
   - platform: ping
     hosts:
       jorge_mate10_ping: 192.168.86.32
-      blanca_mi_A1_ping: 192.168.86.25
-      patricia_axon7mini_ping: 192.168.86.33
+      blanca_mi_A3_ping: 192.168.86.165
+      patri_honor8x_ping: 192.168.86.175
+      patri_ipad_ping: 192.168.86.176
+      sara_ipad_ping: 192.168.86.177
+      sara_xiaomiplay_ping: 192.168.86.190
+    consider_home: 180  
 
 
 # Discover some devices automatically
@@ -178,7 +420,7 @@ history:
 
 http:
   # Secrets are defined in the file secrets.yaml
-  api_password: !secret http_api_password
+  # api_password: !secret http_api_password Ahora desde legacy api password en auth provider
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   ssl_certificate: !secret ssl_certificate 
   ssl_key: !secret ssl_key 
@@ -198,26 +440,27 @@ input_boolean:
     name: Alarma activada
     initial: off
     icon: mdi:alarm-light
-
+   
 input_number:
   cinema_slider:
     name: CinemaLEDs_speed
-    initial: 150
+    initial: 30
     min: 0
     max: 150
     step: 10  
     mode: slider  
   cinema_slider2:
     name: CinemaLED2_speed
-    initial: 150
+    initial: 30
     min: 0
     max: 150
     step: 10  
     mode: slider  
 
-light:  
-  - platform: skybell
-  - platform: mqtt_json
+light:
+
+  - platform: mqtt
+    schema: json 
     name: "CinemaLEDs"
     state_topic: "leds/cine"
     command_topic: "leds/cine/set"
@@ -242,11 +485,11 @@ light:
       - solid  
       - twinkle  
     brightness: true
-    flash: true
     rgb: true
     optimistic: false
     qos: 0
-  - platform: mqtt_json
+  - platform: mqtt
+    schema: json 
     name: "CinemaLED2"
     state_topic: "leds/cine2"
     command_topic: "leds/cine2/set"
@@ -271,25 +514,94 @@ light:
       - solid  
       - twinkle  
     brightness: true
-    flash: true
     rgb: true
     optimistic: false
     qos: 0
+  - platform: switch
+    name: luz_cama 
+    entity_id: switch.luz_cama 
+  - platform: switch
+    name: luz_armarios 
+    entity_id: switch.luz_armarios
+  - platform: switch
+    name: lampara_lectura 
+    entity_id: switch.switch_22 
+
+  - platform: switch
+    name: luz_techo
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_14 
+
+  - platform: switch
+    name: luz_chimenea
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_13 
+
+  - platform: switch
+    name: luz_mesa
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3 #luz mesa  
+
+  - platform: switch
+    name: luz_downlights
+    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4 #luz techo cocina
+
+  - platform: switch
+    name: luces_frontales
+    entity_id: switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch #luces frontales
+
+  - platform: switch
+    name: luz_jardin
+    entity_id: switch.luz_jardin
+
+  - platform: switch
+    name: luz_trasera
+    entity_id: switch.switch_13 #Luz exterior trasera
+
+  - platform: switch
+    name: luz_garaje
+    entity_id: switch.luz_garaje
+
   - platform: group
     name: CinemaLights
     entities:
       - light.CinemaLEDs
       - light.CinemaLED2
+  - platform: group
+    name: LuzIndirecta
+    entities:
+      - light.ledcocina1
+      - light.ledcocina2    
+  - platform: group
+    name: luces_cocina
+    entities:
+      - light.luz_mesa #luz mesa 
+      - light.luz_downlights #luz techo
+      - light.luzindirecta     
+  - platform: group
+    name: luces_salon
+    entities:
+      - light.level #luz regulable comedor
+      - light.level_2 #luz mesita salon
+      - light.lampara_lectura #enchufe lámpara lectura
+      - light.luz_techo     # luz techo salida y cómoda
+      - light.luz_chimenea     # luz techo chimenea
+  - platform: group
+    name: luces_exterior
+    entities: 
+      - light.luces_frontales
+      - light.luz_jardin 
+      - light.luz_trasera  
+      - light.luz_garaje  
+
 
 # View all events in a logbook
 logbook:
 
 logger:
-  default: critical
+  default: info
   logs:
     homeassistant.components.http.ban: warning
 
-
+lovelace:
+  mode: yaml
 # Enables a map showing the location of tracked devices
 map:
 
@@ -301,45 +613,113 @@ map:
 updater:
   # Optional, allows Home Assistant developers to focus on popular components.
   # include_used_components: true
-
+media_player: 
+  platform: webostv
+  name: tele_cocina
+  host: 192.168.86.60
 mqtt:
-  broker: m23.cloudmqtt.com
-  port: 15523
+  broker: 192.168.86.135
+  #port: 15523  
+  port: 1883
   client_id: HAconnection
-  keepalive: 60
+  #certificate: auto
+  #keepalive: 60
   username: !secret mqtt_username 
   password: !secret mqtt_password 
 
 nest: # Nest Thermostat
   client_id: !secret nest_client_id 
   client_secret: !secret nest_client_secret 
-
 notify:
-  - name: My_notifier
-    platform: html5
-    gcm_api_key: !secret gcm_api_key 
-    gcm_sender_id: !secret gcm_sender_id 
+  - platform: html5
+    name: My_notifier
+    vapid_pub_key: !secret public_key_vapid
+    vapid_prv_key: !secret private_key_vapid
+    vapid_email: !secret email_vapid
+
+  - platform: webostv
+    host: 192.168.86.60
+    name: tele_cocina
+    icon: mdi:home-automation  
+
+
+
+person:
+  - name: Blanca
+    id: blanca
+    user_id: !secret blanca_user_id
+    device_trackers:
+      - device_tracker.blanca_mi_A3_ping
+      - device_tracker.life360_blanca
+  - name: Patricia
+    id: patricia
+    user_id: !secret patricia_user_id
+    device_trackers:
+      - device_tracker.patri_honor8x_ping
+      #- device_tracker.patri_ipad_ping
+      - device_tracker.life360_patricia
+  - name: Sara
+    id: sara
+    user_id: !secret sara_user_id 
+    device_trackers:
+      - device_tracker.sara_ipad_ping  
+      - device_tracker.sara_xiaomiplay_ping 
+      - device_tracker.life360_sara
+  - name: Jorge
+    id: jorge
+    user_id: !secret jorge_user_id
+    device_trackers:
+      - device_tracker.jorge_mate10_ping
+      - device_tracker.life360_jorge_lacomba
+    
+
+recorder:
+  purge_keep_days: 7
+
+remote:
+  - platform: harmony
+    name: harmony_hub
+    host: 192.168.86.174
+# Example configuration.yaml entry
+rest_command:
+  desactivar_programa_riego:
+    url: !secret opensprinklerbee_devip_changePrograms
+    method: POST
+    headers:
+      accept: 'application/json, text/html'
+    payload: '{"{{entity}}"}'
+    content_type:  'application/json; charset=utf-8'
+    verify_ssl: false
+
+
 
 sensor:  
-  - platform: fail2ban
-    jails:
-      - ssh
-      - hass-iptables
-    scan_interval: 360  
+  #- platform: fail2ban
+  #  jails:
+  #    - ssh
+  #    - hass-iptables
+  #  scan_interval: 360  
+  - platform: rest
+    method: GET
+    name: programas_osbee
+    resource: !secret opensprinklerbee_devip_getPrograms
+    json_attributes:
+      - progs
+  
   - platform: synologydsm
     host: 192.168.86.39
     username: !secret synology_username 
     password: !secret synology_password
     monitored_conditions:
       - cpu_total_load
-      - memory_real_usage
       - memory_available_real
-      - network_up
+      - memory_real_usage
       - network_down
+      - network_up
       - volume_status
-      - disk_status
-      - disk_smart_status
-      - disk_temp
+      - volume_percentage_used
+      - volume_disk_temp_avg
+      - volume_disk_temp_max
   - platform: google_wifi
     host: 192.168.86.1
     monitored_conditions:
@@ -348,63 +728,109 @@ sensor:
       - uptime
       - last_restart
       - status
-  - platform: skybell
-    monitored_conditions:
-      - chime_level
-  - platform: google_travel_time
-    name: home to work
-    api_key: !secret google_travel_time_api_key 
-    origin: zone.home
-    destination: zone.oficina
-    options:
-      units: metric
+  #- platform: skybell
+  #  monitored_conditions:
+  #    - chime_level
+  #- platform: google_travel_time
+  #  name: home to work
+  #  api_key: !secret google_travel_time_api_key 
+  #  origin: zone.home
+  #  destination: zone.oficina
+  #  options:
+  #    units: metric
   - platform: time_date
     display_options:
       - 'time'
       - 'date'
       - 'date_time'
       - 'time_date'
-  - platform: google_travel_time
-    name: home_to_work
-    api_key: !secret google_travel_time_api_key 
-    origin: zone.home
-    destination: zone.oficina
-    scan_interval: 3600 #intervalo de polling en segundos. 
-    options:
-      units: metric
-  - platform: wunderground
-    api_key: !secret wunderground_api_key 
-    lang: SP
+  #- platform: google_travel_time
+  #  name: home_to_work
+  #  api_key: !secret google_travel_time_api_key 
+  #  origin: zone.home
+  #  destination: zone.oficina
+  #  scan_interval: 3600 #intervalo de polling en segundos. 
+  #  options:
+  #    units: metric
+ 
+  
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    units: si
+    language: es
+    scan_interval: '00:15'
+    forecast:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    hourly_forecast:
+      - 0
+      - 1
     monitored_conditions:
-      - temp_c
-      - temp_high_record_c
-      - temp_high_1d_c
-      - temp_low_1d_c
-      - temp_low_record_c
-      - feelslike_c
-      - feelslike_string
-      - heat_index_string
-      - precip_today_metric
-      - precip_today_string
-      - precip_1d
-      - wind_kph
-      - wind_1d_kph
-      - wind_string
-      - pressure_mb
-      - pressure_trend
-      - relative_humidity
-      - solarradiation
-      - alerts
-      - weather_1d_metric
-      - weather_1n_metric
-      - weather_2d_metric
-      - weather_2n_metric
-      - weather_3d_metric
-      - weather_3n_metric
-      - weather_4d_metric
-      - weather_4n_metric
+      - summary
+      - icon
+      - temperature
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - apparent_temperature
+      - temperature_high
+      - temperature_low
+      - dew_point
+      - wind_speed
+      - wind_bearing
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - hourly_summary #for next 2 days
+      - daily_summary #for thr next week
+      - precip_intensity_max
+      - uv_index
+      - moon_phase
+      - sunrise_time
+      - sunset_time
+      - nearest_storm_distance
+      - nearest_storm_bearing
+  # Example configuration.yaml entry
+
+  - platform: history_stats
+    name: hours_nest_on_today
+    entity_id: sensor.living_room_thermostat_hvac_state
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'   
+#  - platform: history_stats    
+#      name: times_nest_on_today
+#      entity_id: sensor.living_room_thermostat_hvac_state
+#      state: 'on'
+#      type: count
+#      start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+#      end: '{{ now() }}'  
   - platform: template
     sensors:
+      osbee_programs_disable:
+        friendly_name: 'osbee_programs_to_disable'
+        entity_id: sensor.programas_osbee
+        value_template: >-
+          
+          {% set ns = namespace (progstochange=[]) %}
+          {%- for p in states.sensor.programas_osbee.attributes.progs -%}
+            {% set ns.progstochange = ns.progstochange+[{'pid':loop.index-1 ,'name': p.name, 'pt': p.pt, 'sts': p.sts, 'nt': p.nt, 'config': (p.config - 1 if p.config % 2 != 0 else p.config)}] %}            
+          {%- endfor -%}
+          {{ns.progstochange[0]}}
+      #osbee_program_changed:
+      #  friendly_name: 'osbee_program_changed'
+      #  entity_id: sensor.programas_osbee
+      #  value_template: >-
+      #    {% set p = states.sensor.programas_osbee.attributes %}
+      #    {% set ns={'name': p.name, 'pt': p.pt, 'sts': p.sts, 'nt': p.nt, 'config': (p.config - 1 if p.config % 2 != 0 else p.config)} %}
+      #    {{ns}}
       proximo_evento:
         friendly_name: 'proximo_evento'
         value_template: "{{ states.calendar.jolaca01gmailcom.attributes.message }}"
@@ -427,6 +853,27 @@ sensor:
           {% else %}
             '0'
           {% endif %}
+      
+      lavadora_amps:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Current"
+        value_template: '{{ states.switch.lavadora.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      lavadora_watts:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Current Consumption"
+        value_template: '{{ states.switch.lavadora.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      lavadora_total_kwh:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Total Consumption"
+        value_template: '{{ states.switch.lavadora.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      lavadora_volts:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Voltage"
+        value_template: '{{ states.switch.lavadora.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      lavadora_today_kwh:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Today's Consumption"
+        value_template: '{{ states.switch.lavadora.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
       neo_coolcam_battery_water_detector_bany_principal:
         friendly_name: 'Battery detector inundación baño 1'
         unit_of_measurement: '%'
@@ -487,8 +934,8 @@ sensor:
           {% else %}
             '0'
           {% endif %}
-      neo_coolcam_battery_pasillo:
-        friendly_name: 'Battery pasillo'
+      neo_coolcam_battery_jardin:
+        friendly_name: 'Battery jardin'
         unit_of_measurement: '%'
         entity_id: zwave.neo_coolcam_battery_powered_pir_sensor_4    
         value_template: >-
@@ -540,41 +987,124 @@ sensor:
       neo_coolcam_battery_puerta_garaje:
         friendly_name: 'Battery puerta garaje'
         unit_of_measurement: '%'
-        entity_id: zwave.neo_coolcam_doorwindow_detector
+        entity_id: zwave.neo_coolcam_doorwindow_detector_2
         value_template: >-
-          {% if states.zwave.neo_coolcam_doorwindow_detector %}
-            {{ states.zwave.neo_coolcam_doorwindow_detector.attributes.battery_level }}
+          {% if states.zwave.neo_coolcam_doorwindow_detector_2 %}
+            {{ states.zwave.neo_coolcam_doorwindow_detector_2.attributes.battery_level }}
           {% else %}
             '0'
           {% endif %}
-shell_command:
-  set_ids_permissions: chmod 0744 /var/log/fail2ban.log
+      neo_coolcam_battery_exterior_caldera:
+        friendly_name: 'Battery exterior caldera'
+        unit_of_measurement: '%'
+        entity_id: zwave.neo_coolcam_battery_powered_pir_sensor_11
+        value_template: >-
+          {% if states.zwave.neo_coolcam_battery_powered_pir_sensor_11 %}
+            {{ states.zwave.neo_coolcam_battery_powered_pir_sensor_11.attributes.battery_level }}
+          {% else %}
+            '0'
+          {% endif %}
+      neo_coolcam_battery_exterior_barbacoa:
+        friendly_name: 'Battery exterior barbacoa'
+        unit_of_measurement: '%'
+        entity_id: zwave.neo_coolcam_battery_powered_pir_sensor_12
+        value_template: >-
+          {% if states.zwave.neo_coolcam_battery_powered_pir_sensor_12 %}
+            {{ states.zwave.neo_coolcam_battery_powered_pir_sensor_12.attributes.battery_level }}
+          {% else %}
+            '0'
+          {% endif %}
+      neo_coolcam_battery_primera_planta:
+        friendly_name: 'Battery pasillo primera planta'
+        unit_of_measurement: '%'
+        entity_id: zwave.neo_coolcam_battery_powered_pir_sensor_13
+        value_template: >-
+          {% if states.zwave.neo_coolcam_battery_powered_pir_sensor_13 %}
+            {{ states.zwave.neo_coolcam_battery_powered_pir_sensor_13.attributes.battery_level }}
+          {% else %}
+            '0'
+          {% endif %}
+      
 
-skybell: # Enables SkyBell HD
-  username: !secret skybell_username 
-  password: !secret skybell_password
+          
+#shell_command:
+#  disable_os_bee_program1: 'curl --header "Content-Type: application/json" --data {"dkey":"jola96","pid"=1,"pt": [76802, 76804], "sts": [660, -1, -1, -1, -1], "name": "Mediodia", "nt": 2, "config": 32512} http://jolaca01.duckdns.org:8184/cp'
+#skybell: # Enables SkyBell HD
+#  username: !secret skybell_username 
+#  password: !secret skybell_password
 
-# Track the sun
+
+stream:
+
+# Track the sun 
 sun: 
 
-switch:
-  - platform: skybell
-    monitored_conditions:
-      - do_not_disturb
-      - motion_sensor
+switch:  
+  #- platform: skybell
+  #  monitored_conditions:
+  #    - do_not_disturb
+  #    - motion_sensor
+  - platform: mqtt
+    name: "Luz garaje"
+    state_topic: "shellies/shellyswitch-55C491/relay/1"
+    command_topic: "shellies/shellyswitch-55C491/relay/1/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "Luz jardin"  
+    state_topic: "shellies/shelly1-55EE81/relay/0"
+    command_topic: "shellies/shelly1-55EE81/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "Luz cama"  
+    state_topic: "shellies/shelly1-55E3D9/relay/0"
+    command_topic: "shellies/shelly1-55E3D9/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "Luz armarios"  
+    state_topic: "shellies/shelly1-553C7E/relay/0"
+    command_topic: "shellies/shelly1-553C7E/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "Luz indirecta SW"  
+    state_topic: "shellies/shellyswitch25-004367/relay/0"   
+    command_topic: "shellies/shellyswitch25-004367/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "Campana extractora"  
+    state_topic: "shellies/shellyswitch25-004367/relay/1"   
+    command_topic: "shellies/shellyswitch25-004367/relay/1/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+
+system_health:
 
 timer:
   puerta_garaje:
     duration: '00:01:30'
 
-
+tplink:
+  discovery: false
+  switch:
+    - host: 192.168.86.30
+    
 tts: # Text to speech
   #- platform: voicerss
   #  api_key: !secret voicerss_api_key 
   #  language: 'es-es'
   #  codec: 'mp3'
   #  format: '44khz_16bit_stereo'
-  - platform: google
+  - platform: google_translate
     language: 'es-es'
 
 

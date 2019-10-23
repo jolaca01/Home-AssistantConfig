@@ -1,10 +1,20 @@
-
+#First, everything ignored
 *
-!*.yaml
+
+#These will NOT be ignored:
+!configuration.yaml
+!ui-lovelace.yaml
+!customize.yaml
+!automations.yaml
+!scripts.yaml
+!groups.yaml
 !.gitignore
 !README.md
 !HA?.jpg
+
+#These WILL BE ignored explicitly:
 google_calendars.yaml
 secrets.yaml
 known_devices.yaml
 zones.yaml
+

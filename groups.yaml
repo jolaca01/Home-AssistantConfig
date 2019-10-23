@@ -189,7 +189,7 @@ main_switches:
     - timer.puerta_garaje    
     - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_5 #nivel iluminacion garaje
     - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor #alguien en garaje
-    - switch.qubino_zmnhbdx_flush_2_relays_switch_9
+    #- switch.qubino_zmnhbdx_flush_2_relays_switch_9
     - switch.switch_13 #abre puerta cancela
     - binary_sensor.skybell_front_door_button
     - binary_sensor.skybell_front_door_motion
@@ -208,13 +208,13 @@ main_cocina:
     - cover.cocina
     - cover.level_12 #persiana 1 cocina 
     - cover.qubino_zmnhcdx_flush_shutter_level_2 #persiana 2 cocina
-    - cover.level #persiana 3 cocina
+    - cover.fibaro_system_fgrm222_roller_shutter_controller_2_level #persiana 3 cocina
     - cover.level_13 #persiana 4 cocina
     - cover.level_14 #persiana aseo
     - switch.qubino_zmnhbdx_flush_2_relays_switch_3 #luz mesa 
     - switch.qubino_zmnhbdx_flush_2_relays_switch_4 #luz techo
-    - switch.qubino_zmnhbdx_flush_2_relays_switch_16   #luz indirecta
-    - switch.qubino_zmnhbdx_flush_2_relays_switch_17 #campana extractora
+    - switch.qubino_zmnhbdx_flush_2_relays_switch_9   #luz indirecta
+    #- switch.qubino_zmnhbdx_flush_2_relays_switch_17 #campana extractora
     - sensor.neo_coolcam_battery_powered_pir_sensor_temperature #temperatura interior cocina
     - binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_2 #alguien en cocina
     - sensor.neo_coolcam_battery_powered_pir_sensor_luminance_6 #nivel iluminación cocina
@@ -379,14 +379,21 @@ main_synology:
   name: Synology DS216+
   view: no
   entities:
-    - sensor.cpu_load_total
-    - sensor.memory_available_real
-    - sensor.memory_usage_real
-    - sensor.network_down
-    - sensor.network_up
-    - sensor.status_volume_1
-    - sensor.temperature_sda
-    - sensor.temperature_sdb
+    - sensor.synology_dsm_cpu_load_total
+    - sensor.synology_dsm_memory_available_real
+    - sensor.synology_dsm_memory_usage_real
+    - sensor.synology_dsm_network_down
+    - sensor.synology_dsm_network_up
+    - sensor.synology_dsm_status_volume_1
+    - sensor.synology_dsm_volume_used_volume_1
+    - sensor.synology_dsm_maximum_disk_temp_volume_1
+    - sensor.synology_dsm_average_disk_temp_volume_1
+
+
+
+
+
+
 main_sensores_con_baterias:
   name: Estado de las baterias
   view: no
@@ -397,13 +404,17 @@ main_sensores_con_baterias:
     - sensor.neo_coolcam_battery_salon
     - sensor.neo_coolcam_battery_entrada
     - sensor.neo_coolcam_battery_recibidor
-    - sensor.neo_coolcam_battery_pasillo
+    - sensor.neo_coolcam_battery_primera_planta
+    - sensor.neo_coolcam_battery_jardin
     - sensor.neo_coolcam_battery_cine
     - sensor.neo_coolcam_battery_garaje
     - sensor.neo_coolcam_battery_puerta_garaje
+    - sensor.neo_coolcam_battery_exterior_caldera
+    - sensor.neo_coolcam_battery_exterior_barbacoa
     - sensor.neo_coolcam_battery_water_detector_bany_principal
     - sensor.neo_coolcam_battery_water_detector_bany_azul
     - sensor.neo_coolcam_battery_water_detector_aseo
+    
 main_persiana_cocina_grande:
   name: Persiana cocina NW
   view: no

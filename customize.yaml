@@ -2,7 +2,7 @@ group.all_automations:
   hidden: false
 ######################################################################
 sensor.living_room_thermostat_temperature:
-  friendly_name: Temperatura interior salón
+  friendly_name: Temp salón
 climate.living_room:
   friendly_name: Nest salon
 binary_sensor.living_room_thermostat_fan:
@@ -21,9 +21,9 @@ binary_sensor.living_room_thermostat_is_using_emergency_heat:
 binary_sensor.living_room_thermostat_is_locked:
   friendly_name: Nest salon bloqueado
 sensor.living_room_thermostat_humidity:
-  friendly_name: Humedad interior salón
+  friendly_name: Humedad salón
 sensor.pws_relative_humidity:
-  friendly_name: Humedad relativa Ext
+  friendly_name: Hum relativa Ext
 sensor.pws_solarradiation:
   friendly_name: Radiacion solar
 sensor.pws_pressure_trend:
@@ -51,15 +51,25 @@ sensor.pws_precip_today_metric:
 sensor.pws_precip_today_string:
   hidden: true
 sensor.pws_temp_c:
-  friendly_name: Temperatura exterior
+  friendly_name: Temp exterior
 sensor.pws_temperature_string:
-  friendly_name: Temperatura Ext Resumen
+  friendly_name: Temp Ext Resumen
 sensor.neo_coolcam_battery_powered_pir_sensor_temperature:
-  friendly_name: Temperatura interior cocina
+  friendly_name: Temp interior cocina
 sensor.neo_coolcam_battery_powered_pir_sensor_temperature_2:
-  friendly_name: Temperatura interior cine
+  friendly_name: Temp interior cine
 sensor.neo_coolcam_battery_powered_pir_sensor_temperature_3:
-  friendly_name: Temperatura exterior entrada
+  friendly_name: Temp exterior entrada casa
+sensor.neo_coolcam_battery_powered_pir_sensor_temperature_5:
+  friendly_name: Temp exterior caldera
+sensor.neo_coolcam_battery_powered_pir_sensor_temperature_6:
+  friendly_name: Temp ext casa
+sensor.neo_coolcam_battery_powered_pir_sensor_temperature_7:
+  friendly_name: Temp interior primera planta
+sensor.dark_sky_temperature: 
+  friendly_name: Temp en Gandia
+sensor.dark_sky_humidity: 
+  friendly_name: Humedad Gandia
 #########################################################################  
 
 timer.puerta_garaje:
@@ -86,7 +96,7 @@ binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor:
   friendly_name: Alguien en garaje
   device_class: motion
 binary_sensor.sensor_2:
-  friendly_name: Alguien en pasillo planta 1
+  friendly_name: Alguien en jardín
   device_class: motion
 binary_sensor.sensor_3:
   friendly_name: Alguien en comedor
@@ -106,13 +116,22 @@ binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_3:
 binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_4:
   friendly_name: Alguien en entrada exterior
   device_class: motion
-binary_sensor.sensor_6:
+binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_6:
+  friendly_name: Alguien en exterior caldera
+  device_class: motion
+binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_7:
+  friendly_name: Alguien en exterior barbacoa
+  device_class: motion
+binary_sensor.neo_coolcam_battery_powered_pir_sensor_sensor_8:
+  friendly_name: Alguien en pasillo primera planta
+  device_class: motion
+binary_sensor.neo_coolcam_doorwindow_detector_sensor:
   friendly_name: Puerta garaje abierta
   icon: mdi:garage-alert
 sensor.luminance:
   friendly_name: Nivel iluminacion recibidor
 sensor.neo_coolcam_battery_powered_pir_sensor_luminance_2: #nodo 42
-  friendly_name: Nivel iluminacion pasillo planta 1
+  friendly_name: Nivel iluminacion jardín
 sensor.neo_coolcam_battery_powered_pir_sensor_luminance_3: #nivel iluminacion comedor node 24
   friendly_name: Nivel iluminacion comedor
 sensor.neo_coolcam_battery_powered_pir_sensor_luminance_4: #nivel iluminación salon node 37
@@ -125,6 +144,12 @@ sensor.neo_coolcam_battery_powered_pir_sensor_luminance_7: #nivel iluminación c
   friendly_name: Nivel iluminacion cine
 sensor.neo_coolcam_battery_powered_pir_sensor_luminance_8: #nivel iluminación exterior entrada
   friendly_name: Nivel iluminacion entrada
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_10: #nivel iluminación exterior caldera
+  friendly_name: Nivel iluminacion exterior caldera
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_11: #nivel iluminación exterior barbacoa
+  friendly_name: Nivel iluminacion exterior barbacoa
+sensor.neo_coolcam_battery_powered_pir_sensor_luminance_12: #nivel iluminación pasillo primera planta
+  friendly_name: Nivel iluminacion pasillo primera planta
 sensor.neo_coolcam_battery_cocina:
   icon: mdi:battery
 sensor.neo_coolcam_battery_comedor:
@@ -151,46 +176,70 @@ sensor.neo_coolcam_battery_water_detector_bany_azul:
   icon: mdi:battery
 sensor.neo_coolcam_battery_water_detector_aseo:
   icon: mdi:battery      
+sensor.downstairs_nest_protect_co_status:
+  icon: mdi:weather-fog
+sensor.downstairs_nest_protect_smoke_status:
+  icon: mdi:fire
+sensor.downstairs_nest_protect_color_status:
+  icon: mdi:palette
+sensor.upstairs_nest_protect_co_status:
+  icon: mdi:weather-fog
+sensor.upstairs_nest_protect_smoke_status:
+  icon: mdi:fire
+sensor.upstairs_nest_protect_color_status:
+  icon: mdi:palette           
 ##########################################################################
 cover.habitacion_1:
-  friendly_name: Persianas habitación principal
+  friendly_name: Persianas principal
 cover.habitacion_patri:
-  friendly_name: Persianas habitación Patri
+  friendly_name: Persianas Pat
+cover.persianas_buhardilla:
+  friendly_name: Persianas buhardilla
 cover.salon:
   friendly_name: Persianas salon
 cover.cocina:
   friendly_name: Persianas cocina
-cover.level_2:
-  friendly_name: Sara
+cover.buhardilla1:
+  friendly_name: Buhardilla 1
+cover.buhardilla2:
+  friendly_name: Buhardilla 2
+cover.buhardilla3:
+  friendly_name: Buhardilla 3
+cover.persiana_sara:
+  friendly_name: Persiana Sara
 cover.qubino_zmnhcdx_flush_shutter_level_4: # antiguo cover.level_3:
-  friendly_name: Habitacion 2
+  friendly_name: Principal 2
 cover.level_4:
-  friendly_name: Habitacion 1
+  friendly_name: Principal 1
 cover.qubino_zmnhcdx_flush_shutter_level: #sustituye al estropeado y cambiado: cover.level_5
   friendly_name: Salon 1
 cover.level_6:
   friendly_name: Salon 4
 cover.qubino_zmnhcdx_flush_shutter_level_3:   #cover.level_7:antiguo Patri2
-  friendly_name: Patri 2
+  friendly_name: Pat 2
 cover.level_8:
-  friendly_name: Patri 1
+  friendly_name: Pat 1
 cover.level_9:
   friendly_name: Salon 3
 cover.level_10:
   friendly_name: Salon 2  
-cover.level_11:
+cover.toldo_exterior:
   friendly_name: Toldo exterior
   icon: mdi:blinds
 cover.level_12:
   friendly_name: Cocina 1
 cover.qubino_zmnhcdx_flush_shutter_level_2: 
   friendly_name: Cocina 2  
-cover.level:
+cover.fibaro_system_fgrm222_roller_shutter_controller_2_level:
   friendly_name: Cocina 3
 cover.level_13:
   friendly_name: Cocina 4
 cover.level_14:
   friendly_name: Aseo
+cover.planta_baja:
+  friendly_name: Persianas planta baja
+cover.habitaciones:
+  friendly_name: Persianas habitaciones
 ###########################################################################
 media_player.kitchen:
   friendly_name: Sonos cocina
@@ -219,41 +268,112 @@ device_tracker.bgphone_bgphone:
   friendly_name: Blanca
 device_tracker.ttxjalpp_slphone:
   friendly_name: Sara
+
+person.blanca:
+    entity_picture: "/local/Blanca.jpg"
+person.sara:
+    entity_picture: "/local/Sara.jpg"
+person.patricia:
+    entity_picture: "/local/Patri.jpg"
+person.jorge:
+    entity_picture: "/local/Jorge.jpg"
+
 ########################################################################
 light.level:
-  friendly_name: Luz regulable comedor
+  friendly_name: Luz comedor
   icon: mdi:ceiling-light
 light.level_2:
   friendly_name: Mesita salon
   icon: mdi:lamp
+light.luz_chimenea:
+  friendly_name: Luz chimenea
+  icon: mdi:lightbulb-on-outline
+light.luz_techo:
+  friendly_name: Luz techo 
+  icon: mdi:lightbulb-on-outline
+light.lampara_lectura:
+  friendly_name: Lampara lectura 
+  icon: mdi:floor-lamp
+light.luz_mesa:    
+  friendly_name: Luz mesa #cocina
+  icon: mdi:ceiling-light
+light.luz_downlights: 
+  friendly_name: Downlights #cocina
+  icon: mdi:lightbulb-on-outline  
+light.luzindirecta: 
+  friendly_name: Luz indirecta #cocina
+  icon: mdi:led-strip-variant  
+light.luces_cocina: 
+  friendly_name: Luces cocina #cocina
+  icon: mdi:flash-circle  
+light.luces_salon: #luz techo
+  friendly_name: Luces salón #cocina
+  icon: mdi:flash-circle
+light.luces_exterior:
+  friendly_name: Luces exterior
+  icon: mdi:flash-circle
+light.luces_frontales:
+  friendly_name: Luces frontales
+  icon: mdi:coach-lamp
+light.luz_jardin:
+  friendly_name: Luz jardin
+  icon: mdi:coach-lamp
+light.luz_trasera:
+  friendly_name: Luz trasera
+  icon: mdi:coach-lamp
+light.luz_garaje:
+  friendly_name: Luz garaje
+  icon: mdi:coach-lamp  
+light.cinemaleds:
+  friendly_name: Cinema Led
+  icon: mdi:led-strip-variant  
+light.cinemaled2:
+  friendly_name: Cinema Led 2 
+  icon: mdi:led-strip-variant  
+light.cinemalights:
+  friendly_name: Led 
+  icon: mdi:led-strip-variant  
+light.luz_cama:
+  friendly_name: Luz cama
+  icon: mdi:lightbulb-on-outline
+light.luz_armarios:
+  friendly_name: Luz armarios
+  icon: mdi:lightbulb-on-outline
 ########################################################################
 switch.qubino_zmnhbdx_flush_2_relays_switch_13: #era antes switch.qubino_zmnhbdx_flush_2_relays_switch_7
-  friendly_name: Luz techo chimenea
+  friendly_name: Luz chimenea
   icon: mdi:lightbulb-on-outline
+  hidden: true
 switch.qubino_zmnhbdx_flush_2_relays_switch_14: #era antes switch.qubino_zmnhbdx_flush_2_relays_switch_8
-  friendly_name: Luz techo salida y comoda
+  friendly_name: Luz techo 
   icon: mdi:lightbulb-on-outline
+  hidden: true
 switch.qubino_zmnhbdx_flush_2_relays_switch_18: #anterior switch.switch_11:
   friendly_name: light_and_fan
   hidden: true
 switch.qubino_zmnhbdx_flush_2_relays_switch_16: #anterior switch.qubino_zmnhbdx_flush_2_relays_switch
-  friendly_name: Luz indirecta
+  friendly_name: antiguaind
   icon: mdi:lightbulb-on-outline
+  hidden: true
 switch.qubino_zmnhbdx_flush_2_relays_switch_17: #anterior switch.qubino_zmnhbdx_flush_2_relays_switch_2:
-  friendly_name: Campana extractora
+  friendly_name: Antiguacampana
   icon: mdi:fan
+  hidden: true
 switch.switch_12:
   friendly_name: Luz techo cocina y mesa cocina
   hidden: true
 switch.qubino_zmnhbdx_flush_2_relays_switch_3:
   friendly_name: Luz mesa #cocina
   icon: mdi:ceiling-light
+  hidden: true
 switch.qubino_zmnhbdx_flush_2_relays_switch_4:
-  friendly_name: Luz techo #cocina
+  friendly_name: Downlights #cocina
   icon: mdi:lightbulb-on-outline
+  hidden: true
 switch.switch_13:
-  friendly_name: Cancela
-  icon: mdi:door-open
+  friendly_name: Luz trasera
+  hidden: true
+  icon: mdi:coach-lamp
 switch.switch_16:
   friendly_name: Puerta de garaje
   icon: mdi:car-connected
@@ -262,7 +382,16 @@ switch.switch_2:
   hidden: true
 switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch:
   friendly_name: Luces frontales
-  icon: mdi:lightbulb-on-outline
+  hidden: true
+  icon: mdi:coach-lamp
+switch.luz_jardin:
+  hidden: true
+  friendly_name: Luz jardin
+  icon: mdi:coach-lamp  
+switch.luz_garaje:
+  friendly_name: Luz garaje
+  icon: mdi:coach-lamp   
+
 switch.fibaro_system_fgs222_double_relay_switch_2x15kw_switch_2:
   friendly_name: Luces anulada
   hidden: true
@@ -272,18 +401,17 @@ switch.switch_24:
 switch.switch_22:
   friendly_name: Lampara lectura alta
   icon: mdi:floor-lamp
+  hidden: true
 switch.qubino_zmnhbdx_flush_2_relays_switch_11:
   friendly_name: Interruptor mesita salon
   icon: mdi:lamp
 switch.qubino_zmnhbdx_flush_2_relays_switch_12:
   friendly_name: Interruptor lampara lectura
   icon: mdi:floor-lamp
-switch.qubino_zmnhbdx_flush_2_relays_switch_9:
-  friendly_name: Luz garaje 
+switch.luz_indirecta_sw:
+  friendly_name: Luz indirecta switch
   icon: mdi:lightbulb-on-outline
 ######################################################################################
-
-
 
 
 

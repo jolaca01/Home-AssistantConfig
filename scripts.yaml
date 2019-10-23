@@ -1,232 +1,241 @@
-#####################################################################################
-'sonos_tts': #usado solo para el de buenos días de momento
+#######################################################################################################
+sonos_tts:
   alias: sonos_tts
   sequence:
   - data_template:
       entity_id: '{{ ''media_player.'' ~ where }}'
-      with_group: yes
-    service: media_player.sonos_snapshot
-  - delay: '00:00:02'
-  - data_template:
-      entity_id: '{{ ''media_player.'' ~ where }}'      
-    service: media_player.sonos_unjoin 
+      with_group: true
+    service: sonos.snapshot
+  - delay: 00:00:02
   - data_template:
       entity_id: '{{ ''media_player.'' ~ where }}'
-      volume_level: 0.40
+    service: sonos.unjoin
+  - data_template:
+      entity_id: '{{ ''media_player.'' ~ where }}'
+      volume_level: 0.4
     service: media_player.volume_set
-  - service: tts.google_say #tts.voicerss_say
+  - service: tts.google_translate_say
     data_template:
-      entity_id: "{{ 'media_player.' ~ where }}"
-      message: "{{ what }}"
-  - delay: '00:01:25'
-  - service: media_player.sonos_restore
+      entity_id: '{{ ''media_player.'' ~ where }}'
+      message: '{{ what }}'
+  - service: tts.google_translate_say
     data_template:
-      entity_id: "{{ 'media_player.' ~ where }}"
-      with_group: yes
-
-########################################################################################
-'sonos_tts_todos':
+      entity_id: media_player.googlehome9837
+      message: '{{ what }}'
+  - delay: 00:01:25
+  - service: sonos.restore
+    data_template:
+      entity_id: '{{ ''media_player.'' ~ where }}'
+      with_group: true
+#######################################################################################################
+sonos_tts_todos:
   alias: sonos_tts_todos
   sequence:
   - condition: time
     after: '10:00:00'
     before: '22:00:00'
   - data_template:
-      with_group: yes #entity_id: '{{ ''media_player.'' ~ where }}'
-    service: media_player.sonos_snapshot
-  - delay: '00:00:02'  
-  - service: media_player.sonos_unjoin    
+      with_group: true
+    service: sonos.snapshot
+  - delay: 00:00:02
+  - service: sonos.unjoin
   - data_template:
-      entity_id:         
-        - media_player.kitchen
-        - media_player.living
-        - media_player.dormitorio
-        - media_player.dormitorio_2
-        - media_player.cine
+      entity_id:
+      - media_player.googlehome9837
+      - media_player.living
+      - media_player.dormitorio_1
+      - media_player.dormitorio_2
+      - media_player.cine
+      - media_player.play3
       volume_level: '{{ volume }}'
     service: media_player.volume_set
   - data_template:
       master: '{{ ''media_player.'' ~ master }}'
-      entity_id: 
-        - media_player.kitchen
-        - media_player.living
-        - media_player.dormitorio
-        - media_player.dormitorio_2
-        - media_player.cine
-    service: media_player.sonos_join
-  - service: tts.google_say #tts.voicerss_say
+      entity_id:   
+      - media_player.living
+      - media_player.dormitorio_1
+      - media_player.dormitorio_2
+      - media_player.cine
+      - media_player.play3
+    service: sonos.join
+  - service: tts.google_translate_say
     data_template:
-      entity_id: "{{ 'media_player.' ~ master }}"
-      message: "{{ what }}"
+      entity_id: '{{ ''media_player.'' ~ master }}'
+      message: '{{ what }}'
+  - service: tts.google_translate_say
+    data_template:
+      entity_id: media_player.googlehome9837
+      message: '{{ what }}'    
   - delay:
       minutes: 1
-  - service: media_player.sonos_restore
+  - service: sonos.restore
     data_template:
-      with_group: yes 
-
-########################################################################################
-
-'sonos_llaman_todos':
+      with_group: true
+##############################################################################################################
+sonos_llaman_todos:
   alias: sonos_llaman_todos
   sequence:
-  #- condition: time
-  #  after: '10:00:00'
-  #  before: '22:00:00'
-  #- service: media_player.select_source
-  #  data:
-  #    entity_id: media_player.kitchen
-  #    source: sonos 
   - data_template:
-      with_group: yes #entity_id: '{{ ''media_player.'' ~ where }}'
-    service: media_player.sonos_snapshot
-  - delay: '00:00:02'
-  - service: media_player.sonos_unjoin
+      with_group: true
+    service: sonos.snapshot
+  - delay: 00:00:02
+  - service: sonos.unjoin
   - data_template:
-      entity_id:         
-        - media_player.kitchen
-        - media_player.living
-        - media_player.dormitorio
-        - media_player.dormitorio_2
-        - media_player.cine
+      entity_id:
+      - media_player.googlehome9837
+      - media_player.living
+      - media_player.dormitorio_1
+      - media_player.dormitorio_2
+      - media_player.cine
+      - media_player.play3
       volume_level: '{{ volume }}'
     service: media_player.volume_set
   - data_template:
-      master: "{{ 'media_player.' ~ master }}"
-      entity_id: 
-        - media_player.kitchen
-        - media_player.living
-        - media_player.dormitorio
-        - media_player.dormitorio_2
-        - media_player.cine
-    service: media_player.sonos_join 
+      master: '{{ ''media_player.'' ~ master }}'
+      entity_id:
+      
+      - media_player.living
+      - media_player.dormitorio_1
+      - media_player.dormitorio_2
+      - media_player.cine
+      - media_player.play3
+    service: sonos.join
   - service: media_player.play_media
     data:
-      entity_id: media_player.kitchen
-      media_content_id: 'https://jolaca01.duckdns.org:8123/local/Apartment-buzzer2.mp3'
-      media_content_type: music  
-    
-  - delay: '00:00:03'
-  - service: tts.google_say #tts.voicerss_say
+      entity_id: media_player.living
+      media_content_id: https://jolaca01.duckdns.org:8123/local/Apartment-buzzer2.mp3
+      media_content_type: music
+  - delay: 00:00:03
+  - service: tts.google_translate_say
     data_template:
-      entity_id: "{{ 'media_player.' ~ master }}"
-      message: "{{ what }}"
+      entity_id: '{{ ''media_player.'' ~ master }}'
+      message: '{{ what }}'
+  - service: tts.google_translate_say
+    data_template:
+      entity_id: media_player.googlehome9837
+      message: '{{ what }}'
   - delay:
       seconds: 12
-  - service: media_player.sonos_restore
+  - service: sonos.restore
     data_template:
-      with_group: yes 
-
-########################################################################################
-
-####################################################################################################
-
-'buenos_dias':
+      with_group: true
+buenos_dias:
   alias: Buenos_dias_cocina
   sequence:
   - data_template:
-      where: 'kitchen'
-      what: >
-        {% set hour = now().strftime("%H") %}
-        {% set weekday_full_name = now().strftime("%A") %}
-        {% set month_full_name = now().strftime("%B") %}
-        {% set day = now().strftime("%-d") %}
-        {% set dia_evento = as_timestamp(states.sensor.proximo_evento_empieza.state) | timestamp_custom("%-d") %}
-        {% set dia_cumple = as_timestamp(states.sensor.proximo_cumple_empieza.state) | timestamp_custom("%-d") %}
-        {% set weekday = now().strftime("%w") %}
-        {% if weekday | int==0 %}
-        {% set dia_semana="domingo" %}
-        {% elif weekday | int ==1 %}
-        {% set dia_semana="lunes" %}
-        {% elif weekday | int ==2 %}
-        {% set dia_semana="martes" %}
-        {% elif weekday | int ==3 %}
-        {% set dia_semana="miércoles" %}
-        {% elif weekday | int ==4 %}
-        {% set dia_semana="jueves" %}
-        {% elif weekday | int ==5 %}
-        {% set dia_semana="viernes" %}
-        {% else %}
-        {% set dia_semana="sábado" %}
-        {% endif %}
-        {% if hour | int < 14 %}
-        Buenos días. 
-        {% elif hour | int < 20 %}
-        Buenas tardes.
-        {% else %}
-        Buenas noches.
-        {% endif %}
-        Hoy es {{ dia_semana }}, día {{ day }}.
-        La temperatura interior actual es de {{ states.sensor.living_room_thermostat_temperature.state|int }} 
-        grados centígrados con una humedad interior del {{ states.sensor.living_room_thermostat_humidity.state }} por ciento. 
-        La temperatura exterior actual es de {{ states.sensor.pws_temp_c.state|int }} grados, 
-        con una humedad relativa exterior del {{ states.sensor.pws_relative_humidity.state }} por ciento. 
-        La previsión del tiempo para hoy es la siguiente: {{ states.sensor.pws_weather_1d_metric.state }}, 
-        y durante la noche: {{ states.sensor.pws_weather_1n_metric.state }}.
-        El viento actual es de {{ states.sensor.pws_wind_1d_kph.state }} kilómetros por hora.
-        
-        {% if weekday | int > 0 and weekday | int <= 5 %}
-        Hoy es día laborable.         
-        {% if day==dia_evento %}
-        El próximo evento programado para el dia de hoy en tu agenda es: {{states.sensor.proximo_evento.state}}.
-        {% else %}
-        No tienes ningún evento que recordarte apuntado en tu agenda para hoy.
-        {% endif %}
-        {% if day==dia_cumple %}
-        Además he visto que hoy es el cumpleaños de {{states.sensor.proximo_cumple.state}}. Si te apetece, acuérdate de felicitarle.
-        {% endif %}
-        Según el tráfico a esta hora, el tiempo estimado hasta la oficina de Palma es de {{ states.sensor.home_to_work.state }} minutos.
-        {% else %}
-        ¡¡Hoy es fiesta!! 
-        {% endif %}
-        {{ [
-            "¡Qué tengas muy buen día!" ,
-            "¡Adios!, hablamos más tarde." ,
-            "Hasta luego, qué vaya estupendo." ,
-            "¡Qué te vaya genial el día!" ,
-            "¡Hasta la próxima!, hablamos pronto."
-            ] |random }}
+      where: living
+      what: "{% set hour = now().strftime(\"%H\") %} {% set weekday_full_name = now().strftime(\"\
+        %A\") %} {% set month_full_name = now().strftime(\"%B\") %} {% set day = now().strftime(\"\
+        %-d\") %} {% set dia_evento = as_timestamp(states.sensor.proximo_evento_empieza.state)\
+        \ | timestamp_custom(\"%-d\") %} {% set dia_cumple = as_timestamp(states.sensor.proximo_cumple_empieza.state)\
+        \ | timestamp_custom(\"%-d\") %} {% set weekday = now().strftime(\"%w\") %}\
+        \ {% if weekday | int==0 %} {% set dia_semana=\"domingo\" %} {% elif weekday\
+        \ | int ==1 %} {% set dia_semana=\"lunes\" %} {% elif weekday | int ==2 %}\
+        \ {% set dia_semana=\"martes\" %} {% elif weekday | int ==3 %} {% set dia_semana=\"\
+        miércoles\" %} {% elif weekday | int ==4 %} {% set dia_semana=\"jueves\" %}\
+        \ {% elif weekday | int ==5 %} {% set dia_semana=\"viernes\" %} {% else %}\
+        \ {% set dia_semana=\"sábado\" %} {% endif %} {% if hour | int < 14 %} Buenos\
+        \ días.  {% elif hour | int < 20 %} Buenas tardes. {% else %} Buenas noches.\
+        \ {% endif %} Hoy es {{ dia_semana }}, día {{ day }}. La temperatura interior\
+        \ actual es de {{ states.sensor.living_room_thermostat_temperature.state|int\
+        \ }}  grados centígrados con una humedad interior del {{ states.sensor.living_room_thermostat_humidity.state\
+        \ }} por ciento.  La temperatura en el exterior de nuestra casa es {{ states.sensor.dark_sky_temperature.state|int\
+        \ }} grados,  con una humedad relativa exterior del {{ states.sensor.dark_sky_humidity.state\
+        \ }} por ciento.  La previsión del tiempo para hoy es la siguiente: {{ states.sensor.dark_sky_summary_0d.state\
+        \ }}. El viento actual es de {{ states.sensor.dark_sky_wind_speed.state | round(2) * 3600 / 1000 | round(2) }}\
+        \ kilómetros por hora.\n{% if weekday | int > 0 and weekday | int <= 5 %}\
+        \ Hoy es día laborable.          {% if day==dia_evento %} El próximo evento\
+        \ programado para el dia de hoy en tu agenda es: {{states.sensor.proximo_evento.state}}.\
+        \ {% else %} No tienes ningún evento que recordarte apuntado en tu agenda\
+        \ para hoy. {% endif %} {% if day==dia_cumple %} Además he visto que hoy es\
+        \ el cumpleaños de {{states.sensor.proximo_cumple.state}}. Si te apetece,\
+        \ acuérdate de felicitarle. {% endif %}\n{% else %} ¡¡Hoy es fiesta!!  {%\
+        \ endif %} {{ [\n    \"¡Qué tengas muy buen día!\" ,\n    \"¡Adios!, hablamos\
+        \ más tarde.\" ,\n    \"Hasta luego, qué vaya estupendo.\" ,\n    \"¡Qué te\
+        \ vaya genial el día!\" ,\n    \"¡Hasta la próxima!, hablamos pronto.\"\n\
+        \    ] |random }}\n"
     service: script.sonos_tts
-
-#####################################################################################
-'llaman_puerta':
+llaman_puerta:
   alias: llaman_puerta
   sequence:
-  
   - data_template:
-      master: kitchen
-      what: "¡Atención!. Alguien ha llamado a la puerta exterior. 
-            Por favor, conteste con el fonoporta o desde su aplicación de scaibell. Gracias."
-      volume: 0.50
+      master: living
+      what: ¡Atención!. Alguien ha llamado a la puerta exterior. Por favor, conteste
+        con el fonoporta o desde su aplicación de scaibell. Gracias.
+      volume: 0.5
     service: script.sonos_llaman_todos
-  #- service: shell_command.void_pushbullet #lanza un mensaje de id 99 para resetearlo
-
-########################################################################################
-
-'close_covers':
-  alias: close_covers
+cerrar_persianas:
+  alias: cerrar_persianas
   sequence:
   - data_template:
-      master: kitchen
-      volume: 0.40 
-      what: "Buenas tardes. Ahora está anocheciendo. Por eso, se va a proceder a cerrar las persianas en 10 
-      segundos. Mañana amanecerá a las {{ as_timestamp(states.sun.sun.attributes.next_rising)  | timestamp_custom('%H:%M') }} ."            
+      master: living
+      volume: 0.4
+      what: Buenas tardes. Ahora está anocheciendo. Por eso, se va a proceder a cerrar
+        las persianas en 10 segundos. Mañana amanecerá a las {{ as_timestamp(states.sun.sun.attributes.next_rising)  |
+        timestamp_custom('%H:%M') }} .
     service: script.sonos_tts_todos
-  - delay:
-      seconds: 20
+  - delay: '30'
   - data:
-      entity_id: group.main_persianas_cocina_salon
+      entity_id: group.main_persianas_cocina_salon, cover.toldo_exterior
     service: cover.close_cover
   - data:
-      entity_id: group.main_persianas_habitaciones
+      entity_id: cover.habitaciones
     service: cover.close_cover
   - data:
       message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
         han bajado las persianas al anochecer.'
-    service: notify.my_notifier
+    service: notify.my_notifier 
+  - data:
+      message: '{{ as_timestamp(now()) | timestamp_custom(''%H:%M'', true) }} - Se
+        han bajado las persianas al anochecer.'
+    service: notify.tele_cocina
+aviso_cena:
+  alias: aviso_cena
+  sequence:
+  - data_template:
+      master: living
+      what: ¡Atención!. La cena está lista. ¡Venid ya a la cocina!. Gracias.
+      volume: 0.5
+    service: script.sonos_llaman_todos
+aviso_comida:
+  alias: aviso_comida
+  sequence:
+  - data_template:
+      master: living
+      what: ¡Atención!. La comida está lista. ¡Venid ya a la cocina!. Gracias.
+      volume: 0.5
+    service: script.sonos_llaman_todos
+aviso_nos_vamos_ya:
+  alias: aviso_nos_vamos_ya
+  sequence:
+  - data_template:
+      master: living
+      what: ¡Atención!. Bajad ya, que nos vamos ahora mismo, ¡todas a la puerta de casa pero ya!. Gracias.
+      volume: 0.5
+    service: script.sonos_llaman_todos
+#{% set current_dkey = 'dkey=jola96' %}
+
+#{% set amp = '&' %}
+#{% set url = 'http://jolaca01.duckdns.org:8124/cp?' %}
+
+
+#{{ current_dkey }}
+
+#{% for eachProgram in states.sensor.programas_osbee.attributes.progs -%}
   
-########################################################################################
+#  {% set current_pid = loop.index -1 %}
+#  {% set current_config = eachProgram.config  %}
+#  {%- if current_config % 2 != 0 %} {% set current_config = current_config - 1 %}
+#  {%- endif %}
+  
+#  {% set current_name = eachProgram.name %}  
+#  {% set current_sts = eachProgram.sts  %}
+#  {% set current_nt = eachProgram.nt  %}
+#  {% set current_pt = eachProgram.pt  %}
+#  {{ current_config }} 
+#  {% set changeProgramString = (url~amp~current_dkey~amp~'pid='~current_pid ~amp~'config='~current_config~amp~'nt='~current_nt~amp~'sts='~current_sts~amp~'pt='~current_pt~amp~'name='~current_name |string).replace(" ","") %}
+  
+#{{ changeProgramString }}
+  
 
-
-
-
-    
+#{%- endfor %}
