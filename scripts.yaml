@@ -213,29 +213,3 @@ aviso_nos_vamos_ya:
       what: ¡Atención!. Bajad ya, que nos vamos ahora mismo, ¡todas a la puerta de casa pero ya!. Gracias.
       volume: 0.5
     service: script.sonos_llaman_todos
-#{% set current_dkey = 'dkey=jola96' %}
-
-#{% set amp = '&' %}
-#{% set url = 'http://jolaca01.duckdns.org:8124/cp?' %}
-
-
-#{{ current_dkey }}
-
-#{% for eachProgram in states.sensor.programas_osbee.attributes.progs -%}
-  
-#  {% set current_pid = loop.index -1 %}
-#  {% set current_config = eachProgram.config  %}
-#  {%- if current_config % 2 != 0 %} {% set current_config = current_config - 1 %}
-#  {%- endif %}
-  
-#  {% set current_name = eachProgram.name %}  
-#  {% set current_sts = eachProgram.sts  %}
-#  {% set current_nt = eachProgram.nt  %}
-#  {% set current_pt = eachProgram.pt  %}
-#  {{ current_config }} 
-#  {% set changeProgramString = (url~amp~current_dkey~amp~'pid='~current_pid ~amp~'config='~current_config~amp~'nt='~current_nt~amp~'sts='~current_sts~amp~'pt='~current_pt~amp~'name='~current_name |string).replace(" ","") %}
-  
-#{{ changeProgramString }}
-  
-
-#{%- endfor %}
